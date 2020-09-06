@@ -1,6 +1,6 @@
 My Cleaner (mycleaner)
 ===
-A package of modules for zeroing, destroying,
+A package API for zeroing, destroying,
 and deleting files. Delete folders,
 as well as to work with paths to files and folders.
 
@@ -8,10 +8,9 @@ With this package, you can develop programs to reset, erase,
 and delete files.
 Graphical, console, cross-platform, without worrying about
 methods for deleting, zeroing, and mashing.
-Store data in Smart objects and use the Cleaner object for cleaning.
 
 Example of using - the Smart Cleaner program.
-http://www.hackband.ru
+http://github.com/mysmarthub/smartcleaner/
 
 Install: 
 ---
@@ -21,7 +20,10 @@ PyPi: https://pypi.org/project/mycleaner/
 
 `pip3 install mycleaner`
 
-Use: `from mycleaner.cleaner import Smart, Cleaner`
+Use: `from mycleaner.cleaner import Cleaner`
+
+cleaner = Cleaner()
+
 
 **Author: Aleksander Suvorov**
 ---

@@ -12,57 +12,21 @@
 # Github: https://github.com/mysmarthub/mycleaner/
 # PyPi: https://pypi.org/project/mycleaner/
 # -----------------------------------------------------------------------------
-"""cleaner.py - a set of classes for working with paths to files and folders,
-as well as for zeroing, destroying, and deleting files. Delete a folder..
-
-Classes:
-MyFolder(path='folder path'), Smart(), Cleaner()
-
-MyFolder(path='folder path') - Creating folder objects.
-
-Smart() - Storing, adding, extracting, and deleting paths. Counting files and folders.
-
-Cleaner() - mashing, zeroing, and deleting files/folders.
-"""
+"""cleaner.py - API module for destroying, zeroing and deleting files"""
 import os
 from random import randint
 from itertools import chain
 
 
-class MyFolder:
-    """Folder object
+class Cleaner:
+    """Mashing, zeroing, and deleting files/folders."""
 
-    When creating an instance, it requires an existing folder path address.
-    Stores the path address, allows you to get recursively.
-    """
-    def __init__(self, path: str):
-        if os.path.isdir(path):
-            self.__path = path
-        else:
-            raise NotADirectoryError('Not Folder!!!')
-
-    def get_files(self) -> iter:
-        """Returns a generator containing paths to all nested files."""
-        return (os.path.join(p, file) for p, _, files in os.walk(self.__path) for file in files)
-
-    def get_folders(self) -> iter:
-        """Returns a generator containing paths to all nested folders."""
-        return (os.path.join(p, d) for p, dirs, _ in os.walk(self.__path) for d in dirs)
-
-    @property
-    def path(self) -> str:
-        """Returns the path to the folder whose data is stored in the object."""
-        return self.__path
-
-
-class Smart:
-    """Storage, addition, extraction, counting, removal of paths to files and folders.
-
-    When adding a folder, all the data attached to it is taken into account and added recursively.
-    """
     def __init__(self):
         self.__dirs = {}  # folder paths as instances of the MyFolder () class, where the key is the folder path.
         self.__files = set()  # Stores the paths to the files
+        self.count_zero_files = 0
+        self.count_del_files = 0
+        self.count_del_dirs = 0
 
     def add_path(self, path: str) -> bool:
         """Returns the logical status of adding a path to a file or folder.
@@ -127,15 +91,36 @@ class Smart:
 
         where the key is the path, and the value is the folder object
         """
-        self.__dirs[path] = MyFolder(path)
+        self.__dirs[path] = self.__get_obj(path)
 
+    @staticmethod
+    def __get_obj(new_path):
 
-class Cleaner:
-    """Mashing, zeroing, and deleting files/folders."""
-    def __init__(self):
-        self.count_zero_files = 0
-        self.count_del_files = 0
-        self.count_del_dirs = 0
+        class MyFolder:
+            """MyFolder object
+
+            When creating an instance, it requires an existing folder path address.
+            Stores the path address, allows you to get recursively.
+            """
+            def __init__(self, path: str):
+                if os.path.isdir(path):
+                    self.__path = path
+                else:
+                    raise NotADirectoryError('Not Folder!!!')
+
+            def get_files(self) -> iter:
+                """Returns a generator containing paths to all nested files."""
+                return (os.path.join(p, file) for p, _, files in os.walk(self.__path) for file in files)
+
+            def get_folders(self) -> iter:
+                """Returns a generator containing paths to all nested folders."""
+                return (os.path.join(p, d) for p, dirs, _ in os.walk(self.__path) for d in dirs)
+
+            @property
+            def path(self) -> str:
+                """Returns the path to the folder whose data is stored in the object."""
+                return self.__path
+        return MyFolder(new_path)
 
     @staticmethod
     def replace_path(path: str) -> str:

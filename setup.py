@@ -18,7 +18,7 @@ PACKAGE = "mycleaner"
 VERSION = __import__(PACKAGE).__version__
 AUTHOR = 'Aleksandr Suvorov'
 AUTHOR_EMAIL = "myhackband@yandex.ru"
-DESCRIPTION = "Package for mashing, zeroing, and deleting files. Work with paths to files and folders. " \
+DESCRIPTION = "Package API for mashing, zeroing, and deleting files." \
               "Aleksandr Suvorov | myhackband@yandex.ru | Donate: 4276 4417 5763 7686"
 NAME = "mycleaner"
 URL = "https://github.com/mysmarthub/mycleaner"
