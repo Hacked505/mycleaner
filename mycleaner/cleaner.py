@@ -12,13 +12,45 @@
 # Github: https://github.com/mysmarthub/mycleaner/
 # PyPi: https://pypi.org/project/mycleaner/
 # -----------------------------------------------------------------------------
-"""cleaner.py - API module for destroying, zeroing and deleting files"""
+"""Module for destroying, zeroing and deleting files
+
+Classes:
+--------
+
+Cleaner
+
+    Methods:
+    -------
+    zero_file(self, file: str) -> bool:
+    shred_file(self, path: str, shreds: int) -> bool:
+    del_file(self, path: str) -> bool:
+    del_dir(self, path: str) -> bool:
+    reset_count(self) -> None:
+
+    @staticmethod
+    replace_path(path: str) -> str:
+"""
 import os
 from random import randint
 
 
 class Cleaner:
-    """Mashing, zeroing, and deleting files."""
+    """Mashing, zeroing, and deleting files
+
+    Attributes:
+        self.count_zero_files:int - Counter for zeroed files
+        self.count_del_files:int - Deleted file counter
+        self.count_del_dirs:int - Deleted folder counter
+
+    Methods:
+        replace_path(path: str) -> str: - linux path escaping
+        zero_file(self, file: str) -> bool: - resets the file
+        shred_file(self, path: str, shreds: int) -> bool: - overwrites the file
+        del_file(self, path: str) -> bool: - deletes the file
+        del_dir(self, path: str) -> bool: - deletes a folder
+        reset_count(self) -> None: - resetting counters
+
+    """
 
     def __init__(self):
         self.count_zero_files = 0
@@ -27,7 +59,15 @@ class Cleaner:
 
     @staticmethod
     def replace_path(path: str) -> str:
-        """Linux path escaping"""
+        """Linux path escaping
+
+        Parameters:
+            path - path to the file or folder
+
+        Returns:
+            path: str - If forbidden characters are found in the path,
+            returns the corrected path, if not, the original path
+        """
         symbol = ' !$^&*()=|[]{}?,<>"\':`;'
         for s in symbol:
             if s in path:
@@ -35,7 +75,15 @@ class Cleaner:
         return path
 
     def zero_file(self, file: str) -> bool:
-        """Resets the file. Return the logical result of zeroing the file"""
+        """Resets the file
+
+        Parameters:
+            file: str - path to the file
+
+        Returns:
+            True/False: bool - return the logical result of zeroing the file
+        """
+
         try:
             with open(file, 'wb') as f:
                 f.write(bytes(0))
@@ -46,10 +94,14 @@ class Cleaner:
             return True
 
     def shred_file(self, path: str, shreds: int) -> bool:
-        """Overwrites the file with random data and deletes it.
+        """Overwrites the file with random data and deletes it
 
-        Returns the logical status of file overwriting.
-        Overwrites and deletes the file using the desired method for a specific platform.
+        Parameters:
+            path: str - path to the file
+            shreds: int - number of passes/rewrites
+
+        Returns:
+            True/False: bool - Returns the logical status of file overwriting.
         """
         if os.name == 'posix':
             file = self.replace_path(path)
@@ -72,7 +124,14 @@ class Cleaner:
         return False
 
     def del_file(self, path: str) -> bool:
-        """Deletes the file in the usual way, returns status."""
+        """Deletes the file in the usual way
+
+        Parameters:
+            path: str - path to the file
+
+        Returns:
+            True/False: bool -returns the logical status of deleting a file
+        """
         try:
             if os.path.islink(path):
                 os.unlink(path)
@@ -86,7 +145,14 @@ class Cleaner:
         return False
 
     def del_dir(self, path: str) -> bool:
-        """Deletes a folder, returns status."""
+        """Deletes a folder
+
+        Parameters:
+            path: str - path to the folder
+
+        Returns:
+            True/False: bool -returns the logical status of deleting a folder
+        """
         try:
             if os.path.islink(path):
                 os.unlink(path)
@@ -100,9 +166,7 @@ class Cleaner:
         return False
 
     def reset_count(self) -> None:
-        """Resets counters to 0
-
-        """
+        """Resets counters"""
         self.count_zero_files = 0
         self.count_del_files = 0
         self.count_del_dirs = 0
