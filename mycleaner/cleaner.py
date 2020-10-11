@@ -100,7 +100,9 @@ class Cleaner:
         return False
 
     def reset_count(self) -> None:
-        """Resets counters to 0"""
+        """Resets counters to 0
+
+        """
         self.count_zero_files = 0
         self.count_del_files = 0
         self.count_del_dirs = 0
