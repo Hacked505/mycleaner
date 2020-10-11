@@ -7,28 +7,23 @@
 # -----------------------------------------------------------------------------
 # Aleksandr Suvorov
 # Yandex Money: https://money.yandex.ru/to/4100110928527458
-# Sberbank Russia: 4276 4417 5763 7686
+# SberBank Russia: 4276 4417 5763 7686
 # Email: myhackband@yandex.ru
 # Github: https://github.com/mysmarthub/mycleaner/
 # PyPi: https://pypi.org/project/mycleaner/
 # -----------------------------------------------------------------------------
 """Module for destroying, zeroing and deleting files
 
-Classes:
---------
-
-Cleaner
-
-    Methods:
-    -------
-    zero_file(self, file: str) -> bool:
-    shred_file(self, path: str, shreds: int) -> bool:
-    del_file(self, path: str) -> bool:
-    del_dir(self, path: str) -> bool:
-    reset_count(self) -> None:
-
-    @staticmethod
-    replace_path(path: str) -> str:
+    Classes:
+        Cleaner
+            Methods:
+                zero_file(self, file: str) -> bool:
+                shred_file(self, path: str, shreds: int) -> bool:
+                del_file(self, path: str) -> bool:
+                del_dir(self, path: str) -> bool:
+                reset_count(self) -> None:
+                @staticmethod
+                replace_path(path: str) -> str:
 """
 import os
 from random import randint
@@ -49,7 +44,6 @@ class Cleaner:
         del_file(self, path: str) -> bool: - deletes the file
         del_dir(self, path: str) -> bool: - deletes a folder
         reset_count(self) -> None: - resetting counters
-
     """
 
     def __init__(self):

@@ -12,64 +12,72 @@
 # Github: https://github.com/mysmarthub/mycleaner/
 # PyPi: https://pypi.org/project/mycleaner/
 # -----------------------------------------------------------------------------
+"""Module for working with file and folder paths
+
+    Classes:
+        Folder - Used for storing the path to a folder
+            Methods:
+                get_files(self) -> iter:
+                get_folders(self) -> iter:
+                @property
+                path(self) -> str:
+
+        PathData
+            Methods:
+                add_path(self, path: str) -> bool:
+                del_path(self, path: str) -> bool:
+
+    Add, temporarily store, delete, and get paths to files and
+    folders for further work with them. The path will be used for the
+    destruction/deletion of files/folders.
+    """
 import os
 from itertools import chain
 
 
-class PathData:
+class Folder:
+    """Used for storing the path to a folder
 
-    @staticmethod
-    def __get_my_folder_obj(new_path):
-        """Creates a folder object for storing paths to all nested files and folders.
+    Gets the path to the folder. when calling the corresponding methods,
+    it returns a generator with the paths to files and folders, respectively.
 
-        Accepts:
-        ----------
-        new_path - path to an existing folder
+    Important! When you add a folder, all files and folders attached to it will be added.
+    Requires an existing folder path address when creating an instance.
+    Stores the path address and allows you to get all subfolders and files recursively.
 
-        Returns:
-        -----------
-        Class instance MyFolder
+            Methods:
+                get_files(self) -> iter:
+                get_folders(self) -> iter:
+                @property
+                path(self) -> str:
+    """
+
+    def __init__(self, path: str):
+        """Gets the path to an existing folder
+
+        path: str - path to an existing folder
         """
+        if os.path.isdir(path):
+            self.__path = path
+        else:
+            raise NotADirectoryError('Not Folder!')
 
-        class MyFolder:
-            """Used for storing the path to a folder
+    def get_files(self) -> iter:
+        """Returns a generator containing paths to all nested files."""
+        return (os.path.join(p, file) for p, _, files in os.walk(self.__path) for file in files)
 
-            and storing the paths to all files and folders attached to it.
+    def get_folders(self) -> iter:
+        """Returns a generator containing paths to all nested folders."""
+        return (os.path.join(p, d) for p, dirs, _ in os.walk(self.__path) for d in dirs)
 
-            Important! When you add a folder, all files and folders attached to it will be added.
-            Requires an existing folder path address when creating an instance.
-            Stores the path address and allows you to get all subfolders and files recursively.
+    @property
+    def path(self) -> str:
+        """Returns the path to the folder whose data is stored in the object."""
+        return self.__path
 
-            Get attached files:
-            get_files(self) -> iter:
-            Get subfolders:
-            get_folders(self) -> iter:
-            Folder path:
-            @property
-            ath(self) -> str:
-            """
 
-            def __init__(self, path: str):
-                if os.path.isdir(path):
-                    self.__path = path
-                else:
-                    raise NotADirectoryError('Not Folder!')
-
-            def get_files(self) -> iter:
-                """Returns a generator containing paths to all nested files."""
-                return (os.path.join(p, file) for p, _, files in os.walk(self.__path) for file in files)
-
-            def get_folders(self) -> iter:
-                """Returns a generator containing paths to all nested folders."""
-                return (os.path.join(p, d) for p, dirs, _ in os.walk(self.__path) for d in dirs)
-
-            @property
-            def path(self) -> str:
-                """Returns the path to the folder whose data is stored in the object."""
-                return self.__path
-
-        return MyFolder(new_path)
-
+class PathData:
+    """Working with file and folder paths"""
     def __init__(self):
         self.__dirs = {}  # folder paths as instances of the MyFolder () class, where the key is the folder path.
         self.__files = set()  # Stores the paths to the files
@@ -78,7 +86,6 @@ class PathData:
         """Adds the path to a file or folder to temporary storage
 
         Important! When you add a folder, all files and folders attached to it will be added.
-
         Checks for the existence of a path, for the presence of duplicates,
         a "link". Adds to the desired repository,
         depending on type (file, folder).
@@ -89,7 +96,6 @@ class PathData:
 
         Returns:
         -----------
-        True/False
         Logical status of adding a path to a file or folder.
         """
         if os.path.exists(path) and not self.search_for_duplicates(path) and not os.path.islink(path):
@@ -102,7 +108,6 @@ class PathData:
 
         Removes a path from the repository. If a folder is deleted, the folder object is deleted,
         all nested paths are no longer taken into account losing relevance.
-
         Important! When you delete a folder from temporary storage,
         all files and folders attached to it will be deleted.
 
@@ -112,7 +117,6 @@ class PathData:
 
         Returns:
         -----------
-        True/False
         Returns the logical status of deleting the path to a file or folder.
         """
         if self.search_for_duplicates(path):
@@ -126,8 +130,6 @@ class PathData:
     def get_files(self) -> iter:
         """Retrieves all added files from the storage, including those nested in all folders.
 
-        Returns:
-        -----------
         Returns a generator containing paths to all files.
         """
         return (i for i in chain(self.__files, (file for obj in self.__dirs.values() for file in obj.get_files())))
@@ -135,8 +137,6 @@ class PathData:
     def get_folders(self) -> iter:
         """Retrieves all added folders from the storage, including those nested in all folders.
 
-        Returns:
-        -----------
         Returns an iterator containing paths to all folders.
         """
         return reversed(sorted(path for obj in self.__dirs.values() for path in obj.get_folders()))
@@ -145,9 +145,6 @@ class PathData:
     def is_any_data(self) -> bool:
         """Checks for paths in the storage
 
-        Returns:
-        -----------
-        True/False
         Returns the logical status of checking for the presence/absence of added paths."""
         if self.__files or self.__dirs:
             return True
@@ -156,9 +153,6 @@ class PathData:
     def search_for_duplicates(self, path: str) -> bool:
         """Checks for duplicates
 
-        Returns:
-        -----------
-        True/False
         Returns the logical status of the duplicate path check."""
         return True if path in self.__dirs or path in self.__files else False
 
@@ -176,7 +170,7 @@ class PathData:
 
         Saves it in storage, where the key is the path, and the value is the folder object.
         """
-        self.__dirs[path] = self.__get_my_folder_obj(path)
+        self.__dirs[path] = Folder(path)
 
 
 def main():
