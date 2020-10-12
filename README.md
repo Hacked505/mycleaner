@@ -14,14 +14,21 @@ http://github.com/mysmarthub/smartcleaner/
 Use:
 ---
 `pip install mycleaner`
-<hr>
 
 Author: Aleksandr Suvorov
 ===
 
-Support: myhackband@yandex.ru
+Support: 
 
-GitHub: https://github.com/mysmarthub/mycleaner
+myhackband@yandex.ru
+
+GitHub: 
+
+https://github.com/mysmarthub/mycleaner
+
+PyPi:
+
+https://pypi.org/project/mycleaner/1.0.9/
 
 Help the project financially:
 ---
