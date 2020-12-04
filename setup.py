@@ -5,8 +5,6 @@
 # Licensed under the terms of the MIT License
 # (see LICENSE.txt for details)
 # -----------------------------------------------------------------------------
-# Yandex Money: https://money.yandex.ru/to/4100110928527458
-# Sberbank Russia: 4276 4417 5763 7686
 # Email: myhackband@yandex.ru
 # Github: https://github.com/mysmarthub/mycleaner/
 # PyPi: https://pypi.org/project/mycleaner/
@@ -18,7 +16,7 @@ PACKAGE = "mycleaner"
 VERSION = __import__(PACKAGE).__version__
 AUTHOR = __import__(PACKAGE).__author__
 AUTHOR_EMAIL = "myhackband@yandex.ru"
-DESCRIPTION = "Package API for mashing, zeroing, and deleting files. " \
+DESCRIPTION = "Консольная утилита для затирания, обнуления, удаления файлов." \
               "Aleksandr Suvorov | myhackband@yandex.ru | Donate: 4276 4417 5763 7686"
 NAME = "mycleaner"
 URL = "https://github.com/mysmarthub/mycleaner"
@@ -60,5 +58,9 @@ setup(
     install_requires=INSTALL_REQUIRES,
     include_package_data=True,
     zip_safe=False,
-    keywords=KEYWORDS
+    keywords=KEYWORDS,
+    entry_points={
+        'console_scripts':
+            ['mycleaner = mycleaner.term_my_cleaner:main']
+        }
 )

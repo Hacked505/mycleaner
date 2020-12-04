@@ -1,19 +1,45 @@
 My Cleaner (mycleaner)
 ===
-A package of modules for overwriting, zeroing, and deleting files.
+Утилита для перезаписи, обнуления и удаления файлов.
 
-With this package, you can develop graphical, 
-console, and cross-platform applications for destroying, 
-zeroing, and deleting files to make 
-it difficult or impossible to restore them.
+С помощью этого пакета вы можете разрабатывать графические,
+консольные и кроссплатформенные приложения для уничтожения,
+обнуление и удаление файлов, чтобы
+их было трудно или невозможно восстановить.
 
-Example of using - the Smart Cleaner program.
-Cross-platform graphical application.
+Пример использования пакета для создания графического приложений - программа Smart Cleaner.
+Desktop GUI Windows, Linux
 http://github.com/mysmarthub/smartcleaner/
 
-Use:
+Запуск и использование:
+---
+<p>Для работы утилиты в консоли используйте файл <i>term_my_cleaner.py</i>, после которого 
+в качестве параметра/параметров, вы можете указать 
+файл/файлы/папку/папки для рекурсивного добавления файлов.</p>
+<p>Будьте осторожны! При добавлении папок, будут добавлены все вложенные в них файлы, 
+в том числе и из вложенных папок.</p>
+<code>python /путь к файлу/term_my_cleaner.py 
+[файл, папка с файлами и папками или набор фалов/набор папок]</code>
+<p>После ввода команды <code>python term_my_cleaner.py </code> вы можете выделить нужные папки или файлы 
+и просто перетащить их в консоль, вместо них будут отображены и 
+при запуске использованы их абсолютные пути.</p>
+
+Установка пакета:
 ---
 `pip install mycleaner`
+
+Дополнительно:
+---
+<p>После установки пакета вы сможете запускать утилиту вызовом команды:</p>
+<code>mycleaner [параметры(путь/пути к файлам/папкам)]</code>
+
+<p>Для удаления некоторых файлов вам могут потребоваться права администратора, 
+для этого установить пакет командой:</p>
+
+`sudo pip install mycleaner`
+
+<p>И запускайте:</p>
+<code>sudo mycleaner [параметры(путь/пути к файлам/папкам)]</code>
 
 Author: Aleksandr Suvorov
 ===
@@ -28,7 +54,7 @@ https://github.com/mysmarthub/mycleaner
 
 PyPi:
 
-https://pypi.org/project/mycleaner/1.0.9/
+https://pypi.org/project/mycleaner/
 
 Help the project financially:
 ---
