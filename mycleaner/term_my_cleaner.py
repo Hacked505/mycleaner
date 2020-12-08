@@ -4,10 +4,10 @@ import os
 from pathlib import Path
 
 try:
-    from mycleaner import cleaner, smart
-except ModuleNotFoundError:
     import cleaner
     import smart
+except (ImportError, ModuleNotFoundError):
+    from mycleaner import cleaner, smart
 
 
 COLUMNS, _ = shutil.get_terminal_size()
