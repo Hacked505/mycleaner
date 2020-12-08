@@ -1,45 +1,49 @@
-My Cleaner (mycleaner)
+mycleaner
 ===
-Утилита для перезаписи, обнуления и удаления файлов.
 
-С помощью этого пакета вы можете разрабатывать графические,
-консольные и кроссплатформенные приложения для уничтожения,
-обнуление и удаление файлов, чтобы
-их было трудно или невозможно восстановить.
-
-Пример использования пакета для создания графического приложений - программа Smart Cleaner.
-Desktop GUI Windows, Linux
-http://github.com/mysmarthub/smartcleaner/
-
-Запуск и использование:
+    Utility for overwriting, zeroing, and deleting files.
+    
+    With this package, you can develop graphical,
+    console, and cross-platform applications to destroy,
+    reset, and delete files so
+    that they are difficult or impossible to recover.
 ---
-<p>Для работы утилиты в консоли используйте файл <i>term_my_cleaner.py</i>, после которого 
-в качестве параметра/параметров, вы можете указать 
-файл/файлы/папку/папки для рекурсивного добавления файлов.</p>
-<p>Будьте осторожны! При добавлении папок, будут добавлены все вложенные в них файлы, 
-в том числе и из вложенных папок.</p>
-<code>python /путь к файлу/term_my_cleaner.py 
-[файл, папка с файлами и папками или набор фалов/набор папок]</code>
-<p>После ввода команды <code>python term_my_cleaner.py </code> вы можете выделить нужные папки или файлы 
-и просто перетащить их в консоль, вместо них будут отображены и 
-при запуске использованы их абсолютные пути.</p>
+>Example of using a package to create
+>graphical applications-Smart Cleaner program.
+>Desktop GUI Windows, Linux
+>
+>github.com: [Smart Cleaner](http://github.com/mysmarthub/smartcleaner/)
 
-Установка пакета:
+Launch and use:
+---
+<code>python /путь к файлу/term_my_cleaner.py 
+[a file, a folder with files and folders, or a set of files/a set of folders]</code>
+<p>After entering the <code>python command term_my_cleaner.py </code> you can select the necessary folders or files
+and simply drag them to the console. their absolute paths will be displayed instead and
+used at startup.</p>
+
+Package installation:
 ---
 `pip install mycleaner`
 
-Дополнительно:
+Additionally:
 ---
-<p>После установки пакета вы сможете запускать утилиту вызовом команды:</p>
-<code>mycleaner [параметры(путь/пути к файлам/папкам)]</code>
+<p>After installing the package, you can run the utility by calling the command:</p>
+<p>Be careful! When adding folders, all files attached to them will be added,
+including those from subfolders.</p>
 
-<p>Для удаления некоторых файлов вам могут потребоваться права администратора, 
-для этого установить пакет командой:</p>
+<code>mycleaner [parameters(path/paths to files/folders)]</code>
+<p>You can also use the <i>file to run the utility in the console turn_my_cleaner.py</i>, after which
+as a parameter/parameters, you can specify
+a file/files/folder/folders for recursively adding files.</p>
+
+<p>To delete some files, you may need administrator rights
+. to do this, install the package with the command:</p>
 
 `sudo pip install mycleaner`
 
-<p>И запускайте:</p>
-<code>sudo mycleaner [параметры(путь/пути к файлам/папкам)]</code>
+<p>And launch:</p>
+<code>sudo mycleaner [parameters(path/paths to files/folders)]</code>
 
 Author: Aleksandr Suvorov
 ===

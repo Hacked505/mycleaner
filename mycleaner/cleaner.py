@@ -39,7 +39,7 @@ class Cleaner:
     def shred_file(self, path: str) -> bool:
         if os.name == 'posix':
             file = self.replace_path(path)
-            os.system(f'shred -zu -n {self.shreds} {file}')
+            os.system(f'shred -zvu -n {self.shreds} {file}')
         else:
             try:
                 for i in range(self.shreds):

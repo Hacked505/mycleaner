@@ -25,57 +25,57 @@ def make_path_obj(path_list):
 def logo_dec(func):
     def deco():
         print('My Cleaner'.center(COLUMNS, '='))
-        print('Утилита для затирания, обнуления, удаления файлов'.center(COLUMNS, ' '))
+        print('Utility for mashing, zeroing, deleting files'.center(COLUMNS, ' '))
         print('Aleksandr Suvorov | myhackband@ya.ru'.center(COLUMNS, '-'))
         print(''.center(COLUMNS, '='))
         func()
         print(''.center(COLUMNS, '='))
-        print('Программа завершена'.center(COLUMNS, '-'))
+        print('The program is complete'.center(COLUMNS, '-'))
     return deco
 
 
 @logo_dec
 def main():
-    print('Добавляем пути...')
+    print('Adding paths...')
     path_list = get_path()
     if path_list:
-        print(f'Добавлено путей: {len(path_list)}')
-        print('Ищем файлы...')
+        print(f'Added paths: {len(path_list)}')
+        print('Looking for files...')
         obj_list = make_path_obj(path_list)
         my_cleaner = cleaner.Cleaner()
         num_files = sum([len(files) for path in path_list for p, _, files in os.walk(path)])
-        print(f'Найдено файлов: {num_files}')
+        print(f'Files found: {num_files}')
         print(''.center(COLUMNS, '='))
         while True:
-            print('Выберите нужное действие:\n0. Выход\n1. Уничтожение\n2. Обнуление\n3. Обычное удаление')
+            print('Select the desired action:\n0. Exit\n1. Destruction\n2. Zeroing\n3. Normal deletion')
             print(''.center(COLUMNS, '-'))
             try:
-                user_input = int(input('Ввод: '))
+                user_input = int(input('Input: '))
                 if user_input not in [0, 1, 2, 3]:
                     raise ValueError
-                my_cleaner.shreds = int(input('Введите количество проходов для перезаписи: '))
+                my_cleaner.shreds = int(input('Enter the number of passes to rewrite: '))
             except ValueError:
                 print(''.center(COLUMNS, '-'))
-                print('Ошибка ввода!')
+                print('Input error!')
                 continue
             else:
                 for obj in obj_list:
-                    print(f'Работаем с: {obj.path}'.center(COLUMNS, '='))
+                    print(f'Working with: {obj.path}'.center(COLUMNS, '='))
                     for file in obj.get_files():
                         if user_input == 1:
-                            print(f'Уничтожаем файл: {file}')
+                            print(f'Destroying the file: {file}')
                             my_cleaner.shred_file(file)
                         elif user_input == 2:
-                            print(f'Обнуляем файл: {file}')
+                            print(f'Resetting the file: {file}')
                             my_cleaner.zero_file(file)
                         elif user_input == 3:
-                            print(f'Удаляем файл: {file}')
+                            print(f'Delete files: {file}')
                             my_cleaner.del_file(file)
-            print('Работа завершена'.center(COLUMNS, '='))
-            print(f'Было обработано файлов: {my_cleaner.count_del_files + my_cleaner.count_zero_files}')
+            print('The work has been completed'.center(COLUMNS, '='))
+            print(f'Files were processed: {my_cleaner.count_del_files + my_cleaner.count_zero_files}')
             break
     else:
-        print('Ошибка! Пути не найдены')
+        print('Error! No paths found')
 
 
 if __name__ == '__main__':
