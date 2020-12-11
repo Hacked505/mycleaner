@@ -3,11 +3,7 @@ import shutil
 import os
 from pathlib import Path
 
-try:
-    import cleaner
-    import smart
-except (ImportError, ModuleNotFoundError):
-    from mycleaner import cleaner, smart
+from mycleaner import cleaner, smart
 
 
 COLUMNS, _ = shutil.get_terminal_size()

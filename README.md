@@ -60,6 +60,10 @@ PyPi:
 
 https://pypi.org/project/mycleaner/
 
+Running in the console:
+---
+`myclenaer [/path/<file>|<dir>]`
+
 Help the project financially:
 ---
 Yandex Money: 
