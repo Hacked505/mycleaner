@@ -1,6 +1,6 @@
 mycleaner <sup>1.1.3</sup>
 ===
->github.com: [mycleaner](http://github.com/mysmarthub/mycleaner/)
+
 ---
     A package of modules and console utilities for destroying,
     zeroing, and deleting files.
@@ -13,7 +13,12 @@ mycleaner <sup>1.1.3</sup>
     You can also use a ready-made console utility for destruction,
     reset and delete files, as well as use the graphical utility 
     developed using the mycleaner and pyside2 package.
->github.com: [Smart Cleaner](http://github.com/mysmarthub/smartcleaner/)
+
+>mycleaner [github.com](http://github.com/mysmarthub/mycleaner/)
+
+>mycleaner [pypi.org](http://github.com/mysmarthub/mycleaner/)
+
+>[Smart Cleaner](http://github.com/mysmarthub/smartcleaner/)
 ---
 Launch and use:
 ---
@@ -21,6 +26,10 @@ Launch and use:
 >Package installation:
 
 `pip install mycleaner`
+
+>Git Clone:
+
+`git clone https://github.com/mysmarthub/mycleaner/`
 
 ---
 
@@ -32,8 +41,7 @@ Launch and use:
 # paths or create your own objects
 from mycleaner import cleaner, smart
 my_cleaner = cleaner.Cleaner(shreds=30)
-my_data_path = smart.DataObj
-my_path_obj = smart.PathObj(path='/path')
+my_data_path = smart.DataObj()
 ```
 >To run the utility, use:
 
