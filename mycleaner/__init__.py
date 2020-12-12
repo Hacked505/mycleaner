@@ -1,6 +1,6 @@
 """A package of modules and console utilities for destroying, zeroing, and deleting files
 
-mycleaner 1.1.3
+mycleaner
 ===============
 
     A package of modules and console utilities for destroying,
