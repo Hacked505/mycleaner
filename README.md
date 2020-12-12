@@ -1,68 +1,82 @@
-mycleaner
+mycleaner <sup>1.1.3</sup>
 ===
-
-    Utility for overwriting, zeroing, and deleting files.
-    
-    With this package, you can develop graphical,
-    console, and cross-platform applications to destroy,
-    reset, and delete files so
-    that they are difficult or impossible to recover.
+>github.com: [mycleaner](http://github.com/mysmarthub/mycleaner/)
 ---
->Example of using a package to create
->graphical applications-Smart Cleaner program.
->Desktop GUI Windows, Linux
->
+    A package of modules and console utilities for destroying,
+    zeroing, and deleting files.
+    -------------------------------------------------------
+    With this package, you can develop graphical,
+    console , and cross-platform applications to destroy,
+    reset data in a file, and delete files
+    so that they are difficult or impossible to recover.
+    -------------------------------------------------------
+    You can also use a ready-made console utility for destruction,
+    reset and delete files, as well as use the graphical utility 
+    developed using the mycleaner and pyside2 package.
 >github.com: [Smart Cleaner](http://github.com/mysmarthub/smartcleaner/)
-
+---
 Launch and use:
 ---
-<code>python /путь к файлу/term_my_cleaner.py 
-[a file, a folder with files and folders, or a set of files/a set of folders]</code>
-<p>After entering the <code>python command term_my_cleaner.py </code> you can select the necessary folders or files
-and simply drag them to the console. their absolute paths will be displayed instead and
-used at startup.</p>
 
-Package installation:
----
+>Package installation:
+
 `pip install mycleaner`
+
+---
+
+>Use:
+
+```python
+# Import the cleaner module to create the object
+# Import the smart module to create an object for storing and working with 
+# paths or create your own objects
+from mycleaner import cleaner, smart
+my_cleaner = cleaner.Cleaner(shreds=30)
+my_data_path = smart.DataObj
+my_path_obj = smart.PathObj(path='/path')
+```
+>To run the utility, use:
+
+<code>python term_my_cleaner.py path to the file / files folder/folders with files</code>
+
+<p>After entering the command, you can enter the necessary folders or files
+, or simply drag them to the console. Their absolute paths will be used after launch.</p>
+
+---
 
 Additionally:
 ---
 <p>After installing the package, you can run the utility by calling the command:</p>
-<p>Be careful! When adding folders, all files attached to them will be added,
-including those from subfolders.</p>
+<p>Be careful! When adding folders, all files from all subfolders 
+will be added recursively.</p>
 
-<code>mycleaner [parameters(path/paths to files/folders)]</code>
-<p>You can also use the <i>file to run the utility in the console turn_my_cleaner.py</i>, after which
-as a parameter/parameters, you can specify
-a file/files/folder/folders for recursively adding files.</p>
+    After installing the package with the command pip install mycleaner,
+    you can run the console utility with the following command:
+
+>Running in the console:
+
+`myclenaer [/path/<file>|<dir>]`
+
+---
 
 <p>To delete some files, you may need administrator rights
 . to do this, install the package with the command:</p>
 
-`sudo pip install mycleaner`
+`sudo pip install mycleaner
 
-<p>And launch:</p>
-<code>sudo mycleaner [parameters(path/paths to files/folders)]</code>
+`sudo mycleaner [paths]`
 
-Author: Aleksandr Suvorov
+`sudo python term_my_cleaner.py [paths]`
+
+
+Support:
 ===
+    Author: Aleksandr Suvorov
+    Email: myhackband@yandex.ru
 
-Support: 
+GitHub: https://github.com/mysmarthub/mycleaner
 
-myhackband@yandex.ru
-
-GitHub: 
-
-https://github.com/mysmarthub/mycleaner
-
-PyPi:
-
-https://pypi.org/project/mycleaner/
-
-Running in the console:
----
-`myclenaer [/path/<file>|<dir>]`
+PyPi: https://pypi.org/project/mycleaner/
 
 Help the project financially:
 ---
