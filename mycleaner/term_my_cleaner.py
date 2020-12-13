@@ -42,6 +42,15 @@ def logo_dec(func):
     return deco
 
 
+def make_error_log(error_list):
+    print(f'Errors: {len(error_list)}')
+    with open('term_my_cleaner_error_log.txt', 'wt') as f:
+        print('Errors'.center(COLUMNS, '='), file=f)
+        for err in error_list:
+            print(err, file=f)
+    print(f'Save term_my_cleaner_error_log.txt')
+
+
 @logo_dec
 def main():
     print('Adding paths...')
@@ -56,6 +65,7 @@ def main():
         print(f'Files found: {num_files}')
         print(''.center(COLUMNS, '='))
         while True:
+            error_list = []
             print('Select the desired action:\n0. Exit\n1. Destruction\n2. Zeroing\n3. Normal deletion')
             print(''.center(COLUMNS, '-'))
             try:
@@ -69,19 +79,24 @@ def main():
                 continue
             else:
                 for obj in obj_list:
+                    status = None
                     print(f'Working with: {obj.path}'.center(COLUMNS, '='))
                     for file in obj.get_files():
                         if user_input == 1:
                             print(f'Destroying the file: {file}')
-                            my_cleaner.shred_file(file)
+                            status = my_cleaner.shred_file(file)
                         elif user_input == 2:
                             print(f'Resetting the file: {file}')
-                            my_cleaner.zero_file(file)
+                            status = my_cleaner.zero_file(file)
                         elif user_input == 3:
                             print(f'Delete files: {file}')
-                            my_cleaner.del_file(file)
+                            status = my_cleaner.del_file(file)
+                        if not status:
+                            error_list.append(file)
             print('The work has been completed'.center(COLUMNS, '='))
             print(f'Files were processed: {my_cleaner.count_del_files + my_cleaner.count_zero_files}')
+            if error_list:
+                make_error_log(error_list)
             break
     else:
         print('Error! No paths found')
