@@ -101,5 +101,5 @@ Sberbank Russia:
 4276 4417 5763 7686
 
 """
-__version__ = '1.1.3'
+__version__ = '1.1.4'
 __author__ = 'Aleksandr Suvorov'

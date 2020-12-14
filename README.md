@@ -1,4 +1,4 @@
-mycleaner <sup>1.1.3</sup>
+mycleaner <sup>1.1.4</sup>
 ===
 
 ---
@@ -22,6 +22,20 @@ mycleaner <sup>1.1.3</sup>
 ---
 Launch and use:
 ---
+```commandline
+usage: My Cleaner -h --log --version paths paths ...
+
+A package of modules and console utilities for destroying zeroing and deleting files
+
+positional arguments:
+  paths       Пути к файлам и папкам через пробел
+
+optional arguments:
+  -h --help  show this help message and exit
+  --log       Save errors log
+  --version   Program version
+
+```
 
 >Package installation:
 
@@ -42,10 +56,14 @@ Launch and use:
 from mycleaner import cleaner, smart
 my_cleaner = cleaner.Cleaner(shreds=30)
 my_data_path = smart.DataObj()
+my_path_obj = smart.PathObj(path='/path')
 ```
 >To run the utility, use:
 
-<code>python term_my_cleaner.py path to the file / files folder/folders with files</code>
+```commandline
+python term_my_cleaner.py '/path' --log
+```
+
 
 <p>After entering the command, you can enter the necessary folders or files
 , or simply drag them to the console. Their absolute paths will be used after launch.</p>
@@ -63,18 +81,30 @@ will be added recursively.</p>
 
 >Running in the console:
 
-`myclenaer [/path/<file>|<dir>]`
+```commandline
+mycleaner '/path' --log
+```
+
+```commandline
+python term_my_cleaner.py '/path' --log
+```
 
 ---
 
 <p>To delete some files, you may need administrator rights
 . to do this, install the package with the command:</p>
 
-`sudo pip install mycleaner
+```commandline
+sudo pip install mycleaner
+```
 
-`sudo mycleaner [paths]`
+```commandline
+sudo mycleaner '/path' --log
+```
 
-`sudo python term_my_cleaner.py [paths]`
+```commandline
+sudo python term_my_cleaner.py '/path' --log
+```
 
 
 Support:

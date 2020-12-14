@@ -86,6 +86,7 @@ class Cleaner:
             if os.path.islink(path):
                 os.unlink(path)
             else:
+                self.zero_file(path)
                 os.remove(path)
         except OSError:
             return False
