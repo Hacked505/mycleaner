@@ -17,6 +17,7 @@ import shutil
 import os
 from pathlib import Path
 from mycleaner import cleaner
+from mycleaner.smart import PathObj
 from mycleaner import __version__
 
 
@@ -31,41 +32,6 @@ def get_num_files(path):
         return 1
     else:
         return 0
-
-
-class PathObj:
-    """Creates a path object for the file or folder."""
-
-    @staticmethod
-    def get_num_files(path):
-        if Path(path).is_dir():
-            return sum([len(files) for _, _, files in os.walk(path)])
-        elif Path(path).is_file():
-            return 1
-        else:
-            return 0
-
-    def __init__(self, path: str):
-        """When creating an object, you must specify a path that is checked for existence."""
-        self.__path = path
-
-    @property
-    def path(self):
-        """Path to the file or folder"""
-        return self.__path
-
-    def get_files(self) -> iter:
-        """Returns the file path generator"""
-        if Path(self.__path).is_file():
-            return [self.__path]
-        elif Path(self.__path).is_dir():
-            return (file for file in (os.path.join(p, f)
-                                      for p, _, files in os.walk(self.__path)
-                                      for f in files))
-
-    @property
-    def num_files(self):
-        return self.get_num_files(self.__path)
 
 
 def logo_start():
@@ -110,7 +76,7 @@ def createParser():
         prog='My Cleaner',
         epilog="""Email: myhackband@ya.ru""",
     )
-    parser.add_argument('paths', nargs='+', help='Пути к файлам и папкам через пробел')
+    parser.add_argument('paths', nargs='+', help='Space-separated paths to files and folders')
     parser.add_argument('--log', help='Save errors log',
                         action='store_const', const=True, default=False)
     parser.add_argument('--version', action='version', help='Program version', version='%(prog)s {}'.format(VERSION))

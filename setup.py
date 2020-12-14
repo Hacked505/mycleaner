@@ -25,7 +25,7 @@ LONG_DESCRIPTION = open(join(dirname(__file__), 'README.md')).read()
 INSTALL_REQUIRES = []
 PLATFORM = ['Linux, Windows']
 CLASSIFIERS = [
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
