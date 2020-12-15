@@ -1,4 +1,4 @@
-mycleaner <sup>1.1.4</sup>
+mycleaner <sup>1.1.5</sup>
 ===
 
 ---
@@ -53,10 +53,8 @@ optional arguments:
 # Import the cleaner module to create the object
 # Import the smart module to create an object for storing and working with 
 # paths or create your own objects
+
 from mycleaner import cleaner, smart
-my_cleaner = cleaner.Cleaner(shreds=30)
-my_data_path = smart.DataObj()
-my_path_obj = smart.PathObj(path='/path')
 ```
 >To run the utility, use:
 

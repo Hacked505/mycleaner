@@ -16,9 +16,10 @@ import sys
 import shutil
 import os
 from pathlib import Path
+from mycleaner import smart
 from mycleaner import cleaner
-from mycleaner.smart import PathObj
 from mycleaner import __version__
+import datetime
 
 
 COLUMNS, _ = shutil.get_terminal_size()
@@ -62,9 +63,8 @@ def logo_dec(func):
 
 
 def make_error_log(error_list):
-    print(f'Errors: {len(error_list)}')
-    with open('term_my_cleaner_error_log.txt', 'wt') as f:
-        print('Errors'.center(COLUMNS, '='), file=f)
+    with open('cleaner_error_log', 'a') as f:
+        print(f'Errors {datetime.datetime.now()}'.center(COLUMNS, '='), file=f)
         for err in error_list:
             print(err, file=f)
     print(f'Save term_my_cleaner_error_log.txt')
@@ -83,28 +83,16 @@ def createParser():
     return parser
 
 
-def check_path(path_list):
-    return [path for path in path_list if Path(path).exists()]
+def status_print(status):
+    if status:
+        print('Done!')
+    else:
+        print('Error!')
 
 
-def destroy(obj, file):
-    print(f'Destroying the file: {file}')
-    return obj.shred_file(file)
-
-
-def zero(obj, file):
-    print(f'Resetting the file: {file}')
-    return obj.zero_file(file)
-
-
-def delete(obj, file):
-    print(f'Delete files: {file}')
-    return obj.del_file(file)
-
-
-def start(obj_dict, method=1, log=False):
-    error_list = []
+def work(obj_dict, method=1, log=False):
     my_cleaner = cleaner.Cleaner()
+    # my_cleaner.root = True
     while True:
         try:
             my_cleaner.shreds = int(input('Enter the number of overwrites for files: '))
@@ -112,65 +100,75 @@ def start(obj_dict, method=1, log=False):
             my_cleaner.shreds = 30
         break
     for obj in obj_dict.values():
-        status = None
         print(f'Working with: {obj.path}'.center(COLUMNS, '='))
         for file in obj.get_files():
+            status = None
             if method == 1:
-                status = destroy(my_cleaner, file=file)
+                print(f'Destroying the file: {file}')
+                status = my_cleaner.shred_file(file)
             elif method == 2:
-                status = zero(my_cleaner, file=file)
+                print(f'Resetting the file: {file}')
+                status = my_cleaner.zero_file(file)
             elif method == 3:
-                status = delete(my_cleaner, file=file)
-            if not status:
-                error_list.append(file)
+                print(f'Delete files: {file}')
+                status = my_cleaner.del_file(file)
+            status_print(status)
     print('The work has been completed'.center(COLUMNS, '='))
     print(f'Files were processed: {my_cleaner.count_del_files + my_cleaner.count_zero_files}')
-    print(f'Errors: {len(error_list)}')
-    if log:
-        make_error_log(error_list)
+    print(f'Errors: {len(my_cleaner.errors)}')
+    if log and my_cleaner.errors:
+        make_error_log(my_cleaner.errors)
+    my_cleaner.reset_error_list()
+
+
+def print_info(obj_dict):
+    print(f'Counting files...')
+    for val in obj_dict.values():
+        print(f'path: {val.path} | files[{val.num_of_files}] | folders[{val.num_of_dirs}]')
+    print(f''.center(COLUMNS, '-'))
 
 
 def make_path_obj(path_list):
-    if path_list:
-        obj_dict = {n: PathObj(path) for n, path in enumerate(path_list, 1)}
+    return {n: smart.PathObj(path) for n, path in enumerate(path_list, 1)} if path_list else False
+
+
+def make_path_list(path_list):
+    return [path for path in path_list if Path(path).exists()]
+
+
+def get_user_input(obj_dict):
+    while True:
+        num_files = sum(obj.num_of_files for obj in obj_dict.values())
+        if not num_files:
+            print('No files found...')
+            break
+        print('Select the desired action:\n0. Exit\n1. Destruction and delete\n2. '
+              'Zeroing not delete\n3. Zeroing and delete')
         print(''.center(COLUMNS, '-'))
-        return obj_dict
-    else:
-        return False
+        try:
+            user_input = int(input('Input: '))
+            if user_input not in [0, 1, 2, 3]:
+                raise ValueError
+        except ValueError:
+            print(''.center(COLUMNS, '-'))
+            print('Input error!')
+            continue
+        else:
+            return user_input
 
 
 def main():
     parser = createParser()
     namespace = parser.parse_args()
     logo_start()
-    arg_list = namespace.paths
-    path_list = check_path(arg_list)
-    print(f'Paths added: {len(path_list)}')
-    obj_dict = make_path_obj(path_list)
-    if obj_dict:
-        print(f'Counting files...')
-        for key, val in obj_dict.items():
-            print(f'{key}: path: {val.path} | files[{val.num_files}]')
-        print(f''.center(COLUMNS, '-'))
-        while True:
-            num_files = sum(obj.num_files for obj in obj_dict.values())
-            if not num_files:
-                print('Nothing found...')
-                break
-            print('Select the desired action:\n0. Exit\n1. Destruction and delete\n2. '
-                  'Zeroing not delete\n3. Zeroing and delete')
-            print(''.center(COLUMNS, '-'))
-            try:
-                user_input = int(input('Input: '))
-                if user_input not in [0, 1, 2, 3]:
-                    raise ValueError
-            except ValueError:
-                print(''.center(COLUMNS, '-'))
-                print('Input error!')
-                continue
-            else:
-                start(obj_dict=obj_dict, method=user_input, log=namespace.log)
-            break
+    path_list = make_path_list(namespace.paths)
+    if path_list:
+        print(f'Paths added: {len(path_list)}')
+        obj_dict = make_path_obj(path_list)
+        print_info(obj_dict)
+        user_input = get_user_input(obj_dict)
+        if user_input:
+            work(obj_dict=obj_dict, method=user_input, log=namespace.log)
     else:
         print('Error! You haven\'t added a path...')
     logo_end()
