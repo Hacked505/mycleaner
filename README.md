@@ -1,4 +1,4 @@
-mycleaner <sup>1.1.5</sup>
+mycleaner <sup>1.1.6</sup>
 ===
 
 ---

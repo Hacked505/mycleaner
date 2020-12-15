@@ -66,9 +66,9 @@ class Cleaner:
         rep_path = self.replace_path(path)
         if os.name == 'posix':
             if self.root:
-                os.system(f'sudo shred -zvu -n {self.shreds} {rep_path}')
+                os.system(f'sudo shred -zvuf -n {self.shreds} {rep_path}')
             else:
-                os.system(f'shred -zvuf -n {self.shreds} {rep_path}')
+                os.system(f'shred -zvu -n {self.shreds} {rep_path}')
         else:
             self.zero_file(path)
         if self.check_exist(path):
