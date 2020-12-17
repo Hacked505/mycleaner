@@ -70,7 +70,7 @@ class Cleaner:
             else:
                 os.system(f'shred -zvu -n {self.shreds} {rep_path}')
         else:
-            self.zero_file(path)
+            self.del_file(path)
         if self.check_exist(path):
             self.errors.append(f'Do not shred: {path}')
             return False

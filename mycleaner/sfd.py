@@ -60,7 +60,7 @@ def make_error_log(error_list):
 
 def createParser():
     parser = argparse.ArgumentParser(
-        description='Console utilities for Smart Files destruction, zeroing, '
+        description='Console utilities for destruction, zeroing, '
                     'and deleting files',
         prog='Smart Files Destroyer',
         epilog="""https://githib.com/mysmarthub/sfd""",
