@@ -1,4 +1,4 @@
-mycleaner <sup>1.1.6</sup>
+mycleaner
 ===
 
 ---
@@ -22,18 +22,20 @@ mycleaner <sup>1.1.6</sup>
 ---
 Launch and use:
 ---
-```commandline
-usage: My Cleaner -h --log --version paths paths ...
+```
+usage: Smart Files Destroyer [-h] [--log] [--version] paths [paths ...]
 
-A package of modules and console utilities for destroying zeroing and deleting files
+Console utilities for destroying, zeroing, and deleting files
 
 positional arguments:
-  paths       Пути к файлам и папкам через пробел
+  paths       Paths to files and folders
 
 optional arguments:
-  -h --help  show this help message and exit
+  -h, --help  show this help message and exit
   --log       Save errors log
   --version   Program version
+
+https://githib.com/mysmarthub/sfd
 
 ```
 
@@ -58,8 +60,8 @@ from mycleaner import cleaner, smart
 ```
 >To run the utility, use:
 
-```commandline
-python term_my_cleaner.py '/path' --log
+```
+python sfd.py '/path' --log
 ```
 
 
@@ -79,12 +81,12 @@ will be added recursively.</p>
 
 >Running in the console:
 
-```commandline
+```
 mycleaner '/path' --log
 ```
 
-```commandline
-python term_my_cleaner.py '/path' --log
+```
+python sfd.py '/path' --log
 ```
 
 ---
@@ -92,22 +94,22 @@ python term_my_cleaner.py '/path' --log
 <p>To delete some files, you may need administrator rights
 . to do this, install the package with the command:</p>
 
-```commandline
+```
 sudo pip install mycleaner
 ```
 
-```commandline
+```
 sudo mycleaner '/path' --log
 ```
 
 ```commandline
-sudo python term_my_cleaner.py '/path' --log
+sudo python sfd.py '/path' --log
 ```
 
 
 Support:
 ===
-    Author: Aleksandr Suvorov
+    Created: Aleksandr Suvorov
     Email: myhackband@yandex.ru
 
 GitHub: https://github.com/mysmarthub/mycleaner

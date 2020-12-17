@@ -7,9 +7,9 @@
 # Email: myhackband@yandex.ru
 # Github: https://github.com/mysmarthub/mycleaner/
 # -----------------------------------------------------------------------------
-"""Module for destroying, zeroing, and deleting files.
+"""Module for destruction, zeroing, and deleting files.
 
-Used to create applications for destroying, zeroing, and deleting files.
+Used to create applications for destruction, zeroing, and deleting files.
 Delete a folder. After being reset or destroyed, file recovery is impossible or
 extremely difficult.
 

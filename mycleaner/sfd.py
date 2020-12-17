@@ -5,12 +5,9 @@
 # -----------------------------------------------------------------------------
 # Aleksandr Suvorov
 # Email: myhackband@yandex.ru
-# Github: https://github.com/mysmarthub/mycleaner/
+# Github: https://github.com/mysmarthub/sfd/
 # -----------------------------------------------------------------------------
-"""Console utility for destroying, zeroing, and deleting files.
-
-
-"""
+"""Console utility for destruction, zeroing, and deleting files."""
 import argparse
 import sys
 import shutil
@@ -18,12 +15,11 @@ import os
 from pathlib import Path
 from mycleaner import smart
 from mycleaner import cleaner
-from mycleaner import __version__
 import datetime
 
 
 COLUMNS, _ = shutil.get_terminal_size()
-VERSION = f'v{__version__}'
+VERSION = 'v0.0.3'
 
 
 def get_num_files(path):
@@ -36,7 +32,7 @@ def get_num_files(path):
 
 
 def logo_start():
-    print('My Cleaner'.center(COLUMNS, '='))
+    print('Smart Files Destructor'.center(COLUMNS, '='))
     print('Aleksandr Suvorov | myhackband@ya.ru'.center(COLUMNS, '-'))
     print('Utility for mashing, zeroing, deleting files'.center(COLUMNS, '='))
 
@@ -48,42 +44,38 @@ def logo_end():
 
 def get_path():
     if len(sys.argv) > 1:
-        return [path for path in sys.argv[1:] if Path(path).exists() and (Path(path).is_file() or Path(path).is_dir())]
-
-
-def logo_dec(func):
-    def deco():
-        print('My Cleaner'.center(COLUMNS, '='))
-        print('Aleksandr Suvorov | myhackband@ya.ru'.center(COLUMNS, '-'))
-        print('Utility for mashing, zeroing, deleting files'.center(COLUMNS, '='))
-        func()
-        print(''.center(COLUMNS, '='))
-        print('The program is complete'.center(COLUMNS, '-'))
-    return deco
+        return [path for path in sys.argv[1:] if Path(path).exists() and
+                (Path(path).is_file() or Path(path).is_dir())]
 
 
 def make_error_log(error_list):
-    with open('cleaner_error_log', 'a') as f:
+    name = 'sfd_err_log.txt'
+    with open(name, 'w') as f:
         print(f'Errors {datetime.datetime.now()}'.center(COLUMNS, '='), file=f)
         for err in error_list:
             print(err, file=f)
-    print(f'Save term_my_cleaner_error_log.txt')
+    print(f'Save {name}')
 
 
 def createParser():
     parser = argparse.ArgumentParser(
-        description='A package of modules and console utilities for destroying, zeroing, and deleting files',
-        prog='My Cleaner',
-        epilog="""Email: myhackband@ya.ru""",
+        description='Console utilities for Smart Files destruction, zeroing, '
+                    'and deleting files',
+        prog='Smart Files Destroyer',
+        epilog="""https://githib.com/mysmarthub/sfd""",
     )
-    parser.add_argument('paths', nargs='+', help='Space-separated paths to files and folders')
+    parser.add_argument('paths', nargs='+', help='Paths to files and folders')
     parser.add_argument('--log', help='Save errors log',
                         action='store_const', const=True, default=False)
-    parser.add_argument('--version', action='version', help='Program version', version='%(prog)s {}'.format(VERSION))
+    parser.add_argument('--version',
+                        action='version',
+                        help='Program version',
+                        version='%(prog)s {}'.format(VERSION))
     return parser
 
 
 def status_print(status):
+    print(''.center(COLUMNS, '-'))
     if status:
         print('Done!')
     else:
@@ -92,7 +84,6 @@ def status_print(status):
 
 def work(obj_dict, method=1, log=False):
     my_cleaner = cleaner.Cleaner()
-    # my_cleaner.root = True
     while True:
         try:
             my_cleaner.shreds = int(input('Enter the number of overwrites for files: '))
