@@ -8,7 +8,7 @@
 # Email: myhackband@yandex.ru
 # Github: https://github.com/mysmarthub/sfd/
 # -----------------------------------------------------------------------------
-"""Console utility for destruction, zeroing, and deleting files."""
+"""Smart Console utility for destroying, zeroing, and deleting files."""
 import argparse
 import sys
 import shutil
@@ -20,7 +20,7 @@ import datetime
 
 
 COLUMNS, _ = shutil.get_terminal_size()
-VERSION = 'v0.0.3'
+VERSION = '0.0.4'
 
 
 def get_num_files(path):
@@ -33,7 +33,7 @@ def get_num_files(path):
 
 
 def logo_start():
-    print('Smart Files Destructor'.center(COLUMNS, '='))
+    print('Smart Files Destroyer'.center(COLUMNS, '='))
     print('Aleksandr Suvorov | myhackband@ya.ru'.center(COLUMNS, '-'))
     print('Utility for mashing, zeroing, deleting files'.center(COLUMNS, '='))
 
@@ -45,8 +45,18 @@ def logo_end():
 
 def get_path():
     if len(sys.argv) > 1:
-        return [path for path in sys.argv[1:] if Path(path).exists() and
-                (Path(path).is_file() or Path(path).is_dir())]
+        return [path for path in sys.argv[1:] if Path(path).exists() and (Path(path).is_file() or Path(path).is_dir())]
+
+
+def logo_dec(func):
+    def deco():
+        print('Smart Files Destroyer'.center(COLUMNS, '='))
+        print('Aleksandr Suvorov | myhackband@ya.ru'.center(COLUMNS, '-'))
+        print('Utility for mashing, zeroing, deleting files'.center(COLUMNS, '='))
+        func()
+        print(''.center(COLUMNS, '='))
+        print('The program is complete'.center(COLUMNS, '-'))
+    return deco
 
 
 def make_error_log(error_list):
@@ -60,18 +70,14 @@ def make_error_log(error_list):
 
 def createParser():
     parser = argparse.ArgumentParser(
-        description='Console utilities for destruction, zeroing, '
-                    'and deleting files',
+        description='Console utilities for destroying, zeroing, and deleting files',
         prog='Smart Files Destroyer',
         epilog="""https://githib.com/mysmarthub/sfd""",
     )
     parser.add_argument('paths', nargs='+', help='Paths to files and folders')
     parser.add_argument('--log', help='Save errors log',
                         action='store_const', const=True, default=False)
-    parser.add_argument('--version',
-                        action='version',
-                        help='Program version',
-                        version='%(prog)s {}'.format(VERSION))
+    parser.add_argument('--version', action='version', help='Program version', version='%(prog)s v{}'.format(VERSION))
     return parser
 
 

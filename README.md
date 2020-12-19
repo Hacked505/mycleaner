@@ -1,6 +1,19 @@
 mycleaner
 ===
+![GitHub repo size](https://img.shields.io/github/repo-size/mysmarthub/mycleaner)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/mycleaner?label=pypi%20downloads)](https://pypi.org/project/mycleaner/)
+[![GitHub all releases](https://img.shields.io/github/downloads/mysmarthub/mycleaner/total?label=github%20downloads)](https://github.com/mysmarthub/mycleaner/)
+![GitHub](https://img.shields.io/github/license/mysmarthub/mycleaner)
+![GitHub Repo stars](https://img.shields.io/github/stars/mysmarthub/mycleaner?style=social)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/mysmarthub/mycleaner)](https://github.com/mysmarthub/mycleaner/)
+[![PyPI](https://img.shields.io/pypi/v/mycleaner)](https://pypi.org/project/mycleaner/)
+![PyPI - Format](https://img.shields.io/pypi/format/mycleaner)
 
+    Created: Aleksandr Suvorov
+    Email: myhackband@yandex.ru
+
+---
+Description:
 ---
     A package of modules and console utilities for destroying,
     zeroing, and deleting files.
@@ -14,11 +27,12 @@ mycleaner
     reset and delete files, as well as use the graphical utility 
     developed using the mycleaner and pyside2 package.
 
->mycleaner [github.com](http://github.com/mysmarthub/mycleaner/)
+>mycleaner [github.com](https://github.com/mysmarthub/mycleaner/)
 
->mycleaner [pypi.org](http://github.com/mysmarthub/mycleaner/)
+>mycleaner [pypi.org](https://pypi.org/project/mycleaner/)
 
->[Smart Cleaner](http://github.com/mysmarthub/smartcleaner/)
+>[Smart Cleaner](https://github.com/mysmarthub/smartcleaner/)
+
 ---
 Launch and use:
 ---
@@ -69,7 +83,6 @@ python sfd.py '/path' --log
 , or simply drag them to the console. Their absolute paths will be used after launch.</p>
 
 ---
-
 Additionally:
 ---
 <p>After installing the package, you can run the utility by calling the command:</p>
@@ -106,7 +119,7 @@ sudo mycleaner '/path' --log
 sudo python sfd.py '/path' --log
 ```
 
-
+---
 Support:
 ===
     Created: Aleksandr Suvorov
@@ -116,6 +129,7 @@ GitHub: https://github.com/mysmarthub/mycleaner
 
 PyPi: https://pypi.org/project/mycleaner/
 
+---
 Help the project financially:
 ---
 Yandex Money: 

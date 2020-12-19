@@ -25,12 +25,18 @@ LONG_DESCRIPTION = open(join(dirname(__file__), 'README.md')).read()
 INSTALL_REQUIRES = []
 PLATFORM = ['Linux, Windows']
 CLASSIFIERS = [
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: System Administrators",
     "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
     "Operating System :: OS Independent",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities"
 ]
 KEYWORDS = [
     'mycleaner',
@@ -46,8 +52,7 @@ KEYWORDS = [
     'shred',
     'my cleaner',
     'aleksandr suvorov',
-    'smart py',
-    'hack band'
+    'smart-py.ru',
 ]
 setup(
     name=NAME,
