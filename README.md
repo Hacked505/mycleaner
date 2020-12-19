@@ -139,3 +139,9 @@ https://money.yandex.ru/to/4100110928527458
 Sberbank Russia: 
 
 `4276 4417 5763 7686`
+
+---
+[![Download mycleaner](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/mycleaner-package/files/latest/download)
+
+---
+[![Download mycleaner](https://img.shields.io/sourceforge/dt/mycleaner-package.svg)](https://sourceforge.net/projects/mycleaner-package/files/latest/download)
