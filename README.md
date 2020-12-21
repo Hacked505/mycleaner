@@ -20,6 +20,10 @@ My cleaner
 [![Download mycleaner](https://img.shields.io/sourceforge/dt/mycleaner-package.svg)](https://sourceforge.net/projects/mycleaner-package/files/latest/download)
 ---
 
+![Image alt](https://github.com/mycleaner/mycleaner/raw/master/{path}/logo.png)
+
+---
+
 Help the project financially:
 ---
 >Yandex Money:
