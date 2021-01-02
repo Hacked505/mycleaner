@@ -13,7 +13,7 @@ My cleaner
 [![PyPI - Format](https://img.shields.io/pypi/format/mycleaner)](https://pypi.org/project/mycleaner/)
 [![GitHub repo size](https://img.shields.io/github/repo-size/mysmarthub/mycleaner)](https://github.com/mysmarthub/mycleaner/)
 [![GitHub all releases](https://img.shields.io/github/downloads/mysmarthub/mycleaner/total?label=github%20downloads)](https://github.com/mysmarthub/mycleaner/)
-[![GitHub](https://img.shields.io/github/license/mysmarthub/mycleaner)](https://github.com/mysmarthub/mycleaner/)
+[![GitHub](https://img.shields.io/github/license/mysmarthub/mycleaner?style=flat-square)](https://github.com/mysmarthub/mycleaner/)
 [![GitHub Repo stars](https://img.shields.io/github/stars/mysmarthub/mycleaner?style=social)](https://github.com/mysmarthub/mycleaner)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/mysmarthub/mycleaner)](https://github.com/mysmarthub/mycleaner/)
 
