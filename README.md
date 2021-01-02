@@ -21,7 +21,7 @@ My cleaner
 [![Download mycleaner](https://img.shields.io/sourceforge/dt/mycleaner-package.svg)](https://sourceforge.net/projects/mycleaner-package/files/latest/download)
 ---
 
-![Mycleaner](https://github.com/mysmarthub/mycleaner/raw/master/images/logo.png)
+![Mycleaner](https://github.com/mysmarthub/mycleaner/raw/master/images/mycleaner_logo.png)
 
 ---
 
@@ -56,7 +56,7 @@ Description:
 Help:
 ---
 ```
-usage: Smart Files Destroyer [-h] [--log] [--version] paths [paths ...]
+usage: Mycleaner [-h] [--log] [--version] paths [paths ...]
 
 Console utilities for destroying, zeroing, and deleting files
 
@@ -68,7 +68,7 @@ optional arguments:
   --log       Save errors log
   --version   Program version
 
-https://githib.com/mysmarthub/sfd
+https://githib.com/mysmarthub/mycleaner
 
 ```
 
@@ -94,7 +94,7 @@ https://githib.com/mysmarthub/sfd
 >To run the utility, use:
 
 ```
-python sfd.py '/path' --log
+python mycleaner/mycleaner.py '/path' --log
 ```
 
 
@@ -118,7 +118,7 @@ mycleaner '/path' --log
 ```
 
 ```
-python sfd.py '/path' --log
+python mycleaner/mycleaner.py '/path' --log
 ```
 
 ---
@@ -135,7 +135,7 @@ sudo mycleaner '/path' --log
 ```
 
 ```commandline
-sudo python sfd.py '/path' --log
+sudo python mycleaner/mycleaner.py '/path' --log
 ```
 
 ---

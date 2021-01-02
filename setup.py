@@ -72,6 +72,6 @@ setup(
     keywords=KEYWORDS,
     entry_points={
         'console_scripts':
-            ['mycleaner = mycleaner.sfd:main']
+            ['mycleaner = mycleaner.mycleaner:main']
         }
 )

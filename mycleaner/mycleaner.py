@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 # Aleksandr Suvorov
 # Email: myhackband@yandex.ru
-# Github: https://github.com/mysmarthub/sfd/
+# Github: https://github.com/mysmarthub/mycleaner/
 # -----------------------------------------------------------------------------
 """Smart Console utility for destroying, zeroing, and deleting files."""
 import argparse
@@ -14,8 +14,12 @@ import sys
 import shutil
 import os
 from pathlib import Path
-from mycleaner import smart
-from mycleaner import cleaner
+try:
+    from mycleaner import smart
+    from mycleaner import cleaner
+except ImportError:
+    import smart
+    import cleaner
 import datetime
 
 
@@ -23,17 +27,17 @@ COLUMNS, _ = shutil.get_terminal_size()
 VERSION = '0.0.4'
 
 
-def get_num_files(path):
-    if Path(path).is_dir():
-        return sum([len(files) for _, _, files in os.walk(path)])
-    elif Path(path).is_file():
-        return 1
-    else:
-        return 0
+# def get_num_files(path):
+#     if Path(path).is_dir():
+#         return sum([len(files) for _, _, files in os.walk(path)])
+#     elif Path(path).is_file():
+#         return 1
+#     else:
+#         return 0
 
 
 def logo_start():
-    print('Smart Files Destroyer'.center(COLUMNS, '='))
+    print('My Cleaner'.center(COLUMNS, '='))
     print('Aleksandr Suvorov | myhackband@ya.ru'.center(COLUMNS, '-'))
     print('Utility for mashing, zeroing, deleting files'.center(COLUMNS, '='))
 
@@ -50,7 +54,7 @@ def get_path():
 
 def logo_dec(func):
     def deco():
-        print('Smart Files Destroyer'.center(COLUMNS, '='))
+        print('My Cleaner'.center(COLUMNS, '='))
         print('Aleksandr Suvorov | myhackband@ya.ru'.center(COLUMNS, '-'))
         print('Utility for mashing, zeroing, deleting files'.center(COLUMNS, '='))
         func()
@@ -60,7 +64,7 @@ def logo_dec(func):
 
 
 def make_error_log(error_list):
-    name = 'sfd_err_log.txt'
+    name = 'mycleaner_err_log.txt'
     with open(name, 'w') as f:
         print(f'Errors {datetime.datetime.now()}'.center(COLUMNS, '='), file=f)
         for err in error_list:
@@ -71,8 +75,8 @@ def make_error_log(error_list):
 def createParser():
     parser = argparse.ArgumentParser(
         description='Console utilities for destroying, zeroing, and deleting files',
-        prog='Smart Files Destroyer',
-        epilog="""https://githib.com/mysmarthub/sfd""",
+        prog='My Cleaner',
+        epilog="""https://githib.com/mysmarthub/mycleaner""",
     )
     parser.add_argument('paths', nargs='+', help='Paths to files and folders')
     parser.add_argument('--log', help='Save errors log',
@@ -160,15 +164,23 @@ def main():
     namespace = parser.parse_args()
     logo_start()
     path_list = make_path_list(namespace.paths)
-    if path_list:
-        print(f'Paths added: {len(path_list)}')
-        obj_dict = make_path_obj(path_list)
-        print_info(obj_dict)
-        user_input = get_user_input(obj_dict)
-        if user_input:
-            work(obj_dict=obj_dict, method=user_input, log=namespace.log)
-    else:
-        print('Error! You haven\'t added a path...')
+    try:
+        if path_list:
+            print(f'Paths added: {len(path_list)}:')
+            print(''.center(COLUMNS, '-'))
+            for path in path_list:
+                print(path)
+            print(''.center(COLUMNS, '-'))
+            obj_dict = make_path_obj(path_list)
+            print_info(obj_dict)
+            user_input = get_user_input(obj_dict)
+            if user_input:
+                work(obj_dict=obj_dict, method=user_input, log=namespace.log)
+        else:
+            print('Error! You haven\'t added a path...')
+    except KeyboardInterrupt:
+        print(''.center(COLUMNS, '-'))
+        print('\nСtrl+С was pressed, and the program was terminated.')
     logo_end()
 
 

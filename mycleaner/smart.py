@@ -108,11 +108,3 @@ class DataObj:
     def clear_data(self) -> None:
         """Clearing storage"""
         self.__objects.clear()
-
-
-def main():
-    pass
-
-
-if __name__ == '__main__':
-    main()
