@@ -1,11 +1,9 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------------
-# Copyright © 2020 Aleksandr Suvorov
-# Licensed under the terms of the MIT License
-# (see LICENSE.txt for details)
-# -----------------------------------------------------------------------------
-# Aleksandr Suvorov
-# Email: myhackband@yandex.ru
-# Github: https://github.com/mysmarthub/mycleaner/
+# Licensed under the terms of the BSD 3-Clause License
+# (see LICENSE for details)
+# Copyright © 2020-2021 Aleksandr Suvorov
 # -----------------------------------------------------------------------------
 import os
 from pathlib import Path

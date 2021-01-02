@@ -4,7 +4,9 @@ My cleaner
 >A package of modules and console utilities for destroying, 
 > zeroing, and deleting files.
 
->Created: Aleksandr Suvorov
+>Developer: Aleksandr Suvorov
+
+>BSD 3-Clause License 
 
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/mycleaner?label=pypi%20downloads)](https://pypi.org/project/mycleaner/)
 [![PyPI](https://img.shields.io/pypi/v/mycleaner)](https://pypi.org/project/mycleaner/)
@@ -21,7 +23,7 @@ My cleaner
 [![Download mycleaner](https://img.shields.io/sourceforge/dt/mycleaner-package.svg)](https://sourceforge.net/projects/mycleaner-package/files/latest/download)
 ---
 
-![Mycleaner](https://github.com/mysmarthub/mycleaner/raw/master/images/mycleaner_logo.png)
+![Mycleaner](https://github.com/mysmarthub/mycleaner/raw/master/images/my_cleaner_logo.png)
 
 ---
 
@@ -51,24 +53,60 @@ Description:
 >You can also use a ready-made console utility for destruction, 
 > reset and delete files, as well as use the graphical utility 
 > developed using the mycleaner and pyside2 package.
+> 
+>Console utility for destruction,
+> zeroing, and deleting files.
+>
+>The utility allows you to destruct files, 
+> reset them to zero and delete them, 
+> for complete or partial difficulty in 
+> restoring them after deletion.
+> 
+> >Be careful! When adding folders, all files from all subfolders 
+will be added recursively.
+> 
+> >When you run the program with all the parameters, 
+> all files located at the specified path will be destroyed, 
+> including those nested in other folders,
+> if you specify all the arguments, then after 
+> starting the utility will start working without 
+> confirmation, so be very careful!
+> 
+> The utility can be run with or without command 
+> line arguments to allow you to select the desired parameters manually.
+> 
+> Run the utility without arguments and follow the instructions below.
+> 
+> To run the utility with arguments, 
+> if you specify all the arguments, then after 
+> starting the utility will start working without confirmation, 
+> so be very careful! If you do not specify 
+> one of the important arguments such as the path, 
+> the number of mashing or the method to work with, 
+> the utility will start, but will prompt you to enter 
+> the necessary parameters.
+
 
 ---
 Help:
 ---
 ```
-usage: Mycleaner [-h] [--log] [--version] paths [paths ...]
+usage: My Cleaner [-h] [--p P [P ...]] [--o O] [--s] [--z] [--d] [--log]
+                  [--version]
 
-Console utilities for destroying, zeroing, and deleting files
-
-positional arguments:
-  paths       Paths to files and folders
+Smart Console utility for destroying (shred), zeroing, and deleting files
 
 optional arguments:
-  -h, --help  show this help message and exit
-  --log       Save errors log
-  --version   Program version
-
-https://githib.com/mysmarthub/mycleaner
+  -h, --help            show this help message and exit
+  --p P [P ...], --paths P [P ...]
+                        Paths to files and folders
+  --o O, --overwrites O
+                        Number of overwrites
+  --s                   Shredding and delete file
+  --z                   Zeroing no delete file
+  --d                   Zeroing and delete file
+  --log                 Save errors log
+  --version             Program version
 
 ```
 
@@ -78,64 +116,28 @@ https://githib.com/mysmarthub/mycleaner
 
 >Git Clone:
 
-`git clone https://github.com/mysmarthub/mycleaner/`
+`git clone https://github.com/mysmarthub/mycleaner`
 
 ---
 
 >Use:
 
-```python
-# Import the cleaner module to create the object
-# Import the smart module to create an object for storing and working with 
-# paths or create your own objects
+`mycleaner --p /path/ /path2/file.file --o 100 --s --log`
 
-# from mycleaner import cleaner, smart
-```
+>To delete some files, you may need administrator rights. 
+> To do this, install the package with the command:
+> 
+>`sudo pip install mycleaner`
+> 
+>`sudo mycleaner --p /path/ /path2/file.file --o 100 --s --log`
+
 >To run the utility, use:
 
 ```
-python mycleaner/mycleaner.py '/path' --log
-```
-
-
->After entering the command, you can enter the necessary folders or files, 
-> or simply drag them to the console. Their absolute paths will be used after launch.
-
----
->Additionally:
-
->After installing the package, you can run the utility by calling the command:
->Be careful! When adding folders, all files from all subfolders 
-will be added recursively.
-
->After installing the package with the command pip install mycleaner, 
-> you can run the console utility with the following command:
-
->Running in the console:
-
-```
-mycleaner '/path' --log
-```
-
-```
-python mycleaner/mycleaner.py '/path' --log
-```
-
----
-
->To delete some files, you may need administrator rights .
-> To do this, install the package with the command:
-
-```
-sudo pip install mycleaner
-```
-
-```
-sudo mycleaner '/path' --log
-```
-
-```commandline
-sudo python mycleaner/mycleaner.py '/path' --log
+git clone https://github.com/mysmarthub/mycleaner.git
+cd mycleaner
+pip install -r requirements
+python mycleaner/mycleaner.py --p /path/ /path2/file.file --o 100 --s --log
 ```
 
 ---
@@ -161,4 +163,4 @@ Disclaimer of liability:
 Support:
 ---
     Email: myhackband@yandex.ru
-    Copyright © 2020 Aleksandr Suvorov
+    Copyright © 2020-2021 Aleksandr Suvorov
