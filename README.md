@@ -1,8 +1,8 @@
 My cleaner
 ===
 
-    A package of modules and console utilities for destroying,
-    zeroing, and deleting files.
+>A package of modules and console utilities for destroying, 
+> zeroing, and deleting files.
 
 >Created: Aleksandr Suvorov
 
@@ -40,17 +40,17 @@ https://paypal.me/myhackband
 
 Description:
 ---
-    A package of modules and console utilities for destroying,
-    zeroing, and deleting files.
-    -------------------------------------------------------
-    With this package, you can develop graphical,
-    console , and cross-platform applications to destroy,
-    reset data in a file, and delete files
-    so that they are difficult or impossible to recover.
-    -------------------------------------------------------
-    You can also use a ready-made console utility for destruction,
-    reset and delete files, as well as use the graphical utility 
-    developed using the mycleaner and pyside2 package.
+>A package of modules and console utilities for destroying, 
+> zeroing, and deleting files.
+
+>With this package, you can develop graphical, 
+> console , and cross-platform applications to destroy, 
+> reset data in a file, and delete files 
+> so that they are difficult or impossible to recover. 
+> 
+>You can also use a ready-made console utility for destruction, 
+> reset and delete files, as well as use the graphical utility 
+> developed using the mycleaner and pyside2 package.
 
 ---
 Help:
@@ -98,8 +98,8 @@ python sfd.py '/path' --log
 ```
 
 
->After entering the command, you can enter the necessary folders or files
-, or simply drag them to the console. Their absolute paths will be used after launch.
+>After entering the command, you can enter the necessary folders or files, 
+> or simply drag them to the console. Their absolute paths will be used after launch.
 
 ---
 >Additionally:
@@ -108,8 +108,8 @@ python sfd.py '/path' --log
 >Be careful! When adding folders, all files from all subfolders 
 will be added recursively.
 
-    After installing the package with the command pip install mycleaner,
-    you can run the console utility with the following command:
+>After installing the package with the command pip install mycleaner, 
+> you can run the console utility with the following command:
 
 >Running in the console:
 
