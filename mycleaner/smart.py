@@ -1,12 +1,11 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------------
 # Licensed under the terms of the BSD 3-Clause License
 # (see LICENSE for details)
+# https://github.com/mysmarthub
 # Copyright © 2020-2021 Aleksandr Suvorov
 # -----------------------------------------------------------------------------
 import os
-from pathlib import Path
 
 
 class PathObj:
@@ -14,11 +13,11 @@ class PathObj:
 
     @staticmethod
     def files_path_gen(path):
-        return (str(Path(p).joinpath(file)) for p, _, files in os.walk(path) for file in files)
+        return (os.path.join(p, file) for p, _, files in os.walk(path) for file in files)
 
     @staticmethod
     def dirs_path_gen(path):
-        return (str(Path(p).joinpath(d)) for p, dirs, _ in os.walk(path) for d in dirs)
+        return (os.path.join(p, d) for p, dirs, _ in os.walk(path) for d in dirs)
 
     @staticmethod
     def get_num_of_dirs(path):
@@ -39,20 +38,22 @@ class PathObj:
 
     def get_files(self) -> iter:
         """Returns the file path generator"""
-        if Path(self.__path).is_file():
-            return (file for file in [self.__path])
-        elif Path(self.__path).is_dir():
-            return self.files_path_gen(self.__path)
+        if os.path.isfile(self.__path):
+            return [self.__path]
+        elif os.path.isdir(self.__path):
+            return (os.path.join(p, file) for p, _, files in os.walk(self.__path) for file in files)
+        else:
+            return []
 
     def get_dirs(self) -> iter:
         """Returns the folder path generator"""
-        if Path(self.__path).is_dir():
+        if os.path.isdir(self.path):
             return self.dirs_path_gen(self.__path)
         return []
 
     @property
     def num_of_files(self):
-        return 1 if Path(self.__path).is_file() else self.get_num_of_files(self.__path)
+        return 1 if os.path.isfile(self.__path) else self.get_num_of_files(self.__path)
 
     @property
     def num_of_dirs(self):

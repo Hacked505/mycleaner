@@ -3,9 +3,10 @@
 # -----------------------------------------------------------------------------
 # Licensed under the terms of the BSD 3-Clause License
 # (see LICENSE for details)
+# https://github.com/mysmarthub
 # Copyright © 2020-2021 Aleksandr Suvorov
 # -----------------------------------------------------------------------------
-"""My Cleaner - console utility for destroying, zeroing, and deleting files."""
+"""My Cleaner console utility for destroying (shred), zeroing, and deleting files."""
 import argparse
 import datetime
 import shutil
@@ -13,14 +14,17 @@ import shutil
 from pathlib import Path
 
 try:
-    from mycleaner import smart
-    from mycleaner import cleaner
+    from mycleaner import smart, cleaner
 except (ImportError, ModuleNotFoundError):
-    import smart
-    import cleaner
+    import smart, cleaner
 
 COLUMNS, _ = shutil.get_terminal_size()
-VERSION = '1.1.9'
+VERSION = '1.2.0'
+
+
+def smart_print(text='', char='-'):
+    columns, _ = shutil.get_terminal_size()
+    print(f'{text}'.center(columns, char))
 
 
 def check_path(path):
@@ -28,7 +32,7 @@ def check_path(path):
 
 
 def make_error_log(error_list):
-    name = 'mycleaner_err_log.txt'
+    name = 'my_cleaner_err_log.txt'
     with open(name, 'w') as file:
         print(f'Errors {datetime.datetime.now()}'.center(COLUMNS, '='), file=file)
         for err in error_list:
@@ -41,16 +45,14 @@ def status_print(status):
         print('Done!')
     else:
         print('Error!')
-    print(''.center(COLUMNS, '-'))
+    smart_print()
 
 
 def work(obj_dict, method=1, log=False, shreds=30):
     my_cleaner = cleaner.Cleaner()
     my_cleaner.shreds = shreds
-    path_count = 0
     for obj in obj_dict.values():
-        path_count += 1
-        print(f'{path_count} Working with: {obj.path}'.center(COLUMNS, '='))
+        smart_print(f'Working with: {obj.path}', '=')
         count = 0
         for file in obj.get_files():
             count += 1
@@ -65,9 +67,12 @@ def work(obj_dict, method=1, log=False, shreds=30):
                 print(f'{count} Delete files: {file}')
                 status = my_cleaner.del_file(file)
             status_print(status)
-    print('The work has been completed'.center(COLUMNS, '='))
+    smart_print('The work has been completed', '=')
     print(f'Files were processed: {my_cleaner.count_del_files + my_cleaner.count_zero_files}')
     print(f'Errors: {len(my_cleaner.errors)}')
+    smart_print(' Error list: ', '=')
+    for err in my_cleaner.errors:
+        print(err)
     if log and my_cleaner.errors:
         make_error_log(my_cleaner.errors)
     my_cleaner.reset_error_list()
@@ -87,7 +92,7 @@ def make_path_list(path_list):
 
 def createParser():
     parser = argparse.ArgumentParser(
-        description='Smart Console utility for destroying (shred), zeroing, and deleting files',
+        description='console utility for destroying (shred), zeroing, and deleting files',
         prog='My Cleaner',
         epilog="""https://github.com/mysmarthub/mycleaner""",
     )
@@ -104,7 +109,7 @@ def createParser():
 def get_paths():
     path_list = []
     while True:
-        print(''.center(COLUMNS, '-'))
+        smart_print()
         user_path = input('Enter the path to the file or folder or "q" + Enter to continue: ')
         if user_path in ['q', 'й']:
             if path_list:
@@ -124,18 +129,18 @@ def get_paths():
 
 def get_method():
     while True:
-        print(''.center(COLUMNS, '-'))
+        smart_print()
         print('Select the desired action (Ctrl+C to exit):\n'
               '1. Destruction (shred) and delete\n'
               '2. Zeroing not delete\n'
               '3. Zeroing and delete')
-        print(''.center(COLUMNS, '-'))
+        smart_print()
         try:
             user_input = int(input('Input: '))
             if user_input not in [1, 2, 3]:
                 raise ValueError
         except ValueError:
-            print(''.center(COLUMNS, '-'))
+            smart_print()
             print('Input error!')
             continue
         else:
@@ -147,7 +152,7 @@ def get_shreds():
         try:
             shreds = int(input('Enter the number of file overwrites: '))
         except ValueError:
-            print(''.center(COLUMNS, '-'))
+            smart_print()
             print('Input error!')
         else:
             return shreds
@@ -158,14 +163,16 @@ def get_args(func):
     namespace = parser.parse_args()
 
     def deco():
-        print(f' My Cleaner {VERSION} '.center(COLUMNS, '='))
-        print(' Aleksandr Suvorov | https://githib.com/mysmarthub/mycleaner '.center(COLUMNS, '-'))
-        print('Donate: 4048 4150 0400 5852 | 4276 4417 5763 7686'.center(COLUMNS, ' '))
-        print(' Utility for mashing, zeroing, deleting files '.center(COLUMNS, '='))
+        smart_print(f' My Cleaner {VERSION} ', '=')
+        smart_print(' Aleksandr Suvorov | https://githib.com/mysmarthub/mycleaner ', '-')
+        smart_print('Donate: 4048 4150 0400 5852 | 4276 4417 5763 7686', ' ')
+        smart_print(' Utility for mashing, zeroing, deleting files ', '=')
+        print('To exit, press Ctrl+C')
+        smart_print('', '=')
         func(namespace)
-        print(''.center(COLUMNS, '='))
-        print('The program is complete'.center(COLUMNS, '-'))
-        print('Donate: 4048 4150 0400 5852 | 4276 4417 5763 7686'.center(COLUMNS, ' '))
+        smart_print('', '=')
+        smart_print('The program is complete', '-')
+        smart_print('Donate: 4048 4150 0400 5852 | 4276 4417 5763 7686', ' ')
 
     return deco
 
@@ -179,9 +186,9 @@ def main(namespace):
         path_list = make_path_list(namespace.p)
         if path_list:
             print(f'Paths added: {len(path_list)}')
-            print(''.center(COLUMNS, '-'))
+            smart_print()
             obj_dict = make_path_obj(path_list)
-            print(f'Counting files...')
+            print(f'Counting files (Sometimes it can take a long time) ...')
             for val in obj_dict.values():
                 print(f'path: {val.path} | files[{val.num_of_files}] | folders[{val.num_of_dirs}]')
             if not namespace.s and not namespace.z and not namespace.d:
@@ -204,6 +211,8 @@ def main(namespace):
         else:
             print('Error! You haven\'t added a path...')
     except KeyboardInterrupt:
+        print()
+        print('Exit...')
         pass
 
 

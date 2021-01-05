@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------------
 # Licensed under the terms of the BSD 3-Clause License
@@ -29,10 +28,7 @@ class Cleaner:
         """
         self.errors = []
         self.root = root
-        # Number of passes to overwrite the file
         self.shreds = shreds
-
-        # Counters
         self.count_zero_files = 0
         self.count_del_files = 0
         self.count_del_dirs = 0
@@ -64,9 +60,12 @@ class Cleaner:
         rep_path = self.replace_path(path)
         if os.name == 'posix':
             if self.root:
-                os.system(f'sudo shred -zvuf -n {self.shreds} {rep_path}')
+                status = os.system(f'sudo shred -zuf -n {self.shreds} {rep_path}')
             else:
-                os.system(f'shred -zvu -n {self.shreds} {rep_path}')
+                status = os.system(f'shred -zu -n {self.shreds} {rep_path}')
+            if status:
+                self.errors.append(f'Do not shred, os error: {path}')
+                return False
         else:
             self.del_file(path)
         if self.check_exist(path):
