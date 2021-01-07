@@ -9,22 +9,46 @@ import os
 
 
 class PathObj:
-    """Creates a path object for the file or folder."""
+    """Creates a path object for the file or folder"""
 
     @staticmethod
-    def files_path_gen(path):
+    def files_path_gen(path: str) -> iter:
+        """
+        Generator of paths to files recursively nested in a directory
+
+        :param path: <str> Path to the directory
+        :return: <generator> paths to files recursively nested in a directory
+        """
         return (os.path.join(p, file) for p, _, files in os.walk(path) for file in files)
 
     @staticmethod
-    def dirs_path_gen(path):
+    def dirs_path_gen(path: str):
+        """
+        Generator of paths to folders recursively nested in a directory
+
+        :param path: <str> Path to the directory
+        :return: <generator> paths to folders recursively nested in a directory
+        """
         return (os.path.join(p, d) for p, dirs, _ in os.walk(path) for d in dirs)
 
     @staticmethod
-    def get_num_of_dirs(path):
+    def get_num_of_dirs(path: str):
+        """
+        Counting the number of folders recursively nested in a directory
+
+        :param path: <str> Path to the directory
+        :return: <int> Counting the number of folders recursively nested in a directory
+        """
         return sum([len(dirs) for _, dirs, _ in os.walk(path)])
 
     @staticmethod
     def get_num_of_files(path):
+        """
+        Counting the number of files recursively nested in a directory
+
+        :param path: <str> Path to the directory
+        :return: <int> Counting the number of files recursively nested in a directory
+        """
         return sum([len(files) for _, _, files in os.walk(path)])
 
     def __init__(self, path: str):
@@ -53,10 +77,12 @@ class PathObj:
 
     @property
     def num_of_files(self):
+        """Counting the number of files recursively nested in a directory"""
         return 1 if os.path.isfile(self.__path) else self.get_num_of_files(self.__path)
 
     @property
     def num_of_dirs(self):
+        """Counting the number of dirs recursively nested in a directory"""
         return self.get_num_of_dirs(self.__path)
 
     def __str__(self):

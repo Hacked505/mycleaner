@@ -17,7 +17,8 @@ import shlex
 
 
 class Cleaner:
-    """Creates an object for working with file and folder paths
+    """
+    Creates an object for working with file and folder paths
 
     for further destruction, zeroing, deleting files. Delete a folder.
     """
@@ -35,16 +36,30 @@ class Cleaner:
 
     @staticmethod
     def replace_path(path: str) -> str:
+        """
+        Solving the problem with spaces in the path in Linux
+
+        :param path: <str> Path to the file or directory
+        :return: <str> Corrected path
+        """
         return shlex.quote(path)
 
     @staticmethod
     def check_exist(path):
+        """
+
+        """
         if os.path.exists(path):
             return True
         return False
 
     def zero_file(self, file: str) -> bool:
-        """Resets the file to the specified path"""
+        """
+        Resets the file
+
+        :param file: <str> Path to the file
+        :return: <bool> The logical status of the operation of zeroing the file
+        """
         try:
             with open(file, 'wb') as f:
                 f.write(bytes(0))
@@ -55,46 +70,57 @@ class Cleaner:
             self.count_zero_files += 1
             return True
 
-    def shred_file(self, path: str) -> bool:
-        """Overwrites and deletes the file at the specified path"""
-        rep_path = self.replace_path(path)
+    def shred_file(self, file: str) -> bool:
+        """Overwrites and deletes the file at the specified path
+        :param file: <str> Path to the file
+        :return: <bool> The logical status of the operation of destruction the file
+        """
+        rep_path = self.replace_path(file)
         if os.name == 'posix':
             if self.root:
-                status = os.system(f'sudo shred -zuf -n {self.shreds} {rep_path}')
+                status = os.system(f'sudo shred -zvuf -n {self.shreds} {rep_path}')
             else:
-                status = os.system(f'shred -zu -n {self.shreds} {rep_path}')
+                status = os.system(f'shred -zvu -n {self.shreds} {rep_path}')
             if status:
-                self.errors.append(f'Do not shred, os error: {path}')
+                self.errors.append(f'Do not shred, os error: {file}')
                 return False
         else:
-            self.del_file(path)
-        if self.check_exist(path):
-            self.errors.append(f'Do not shred: {path}')
+            self.del_file(file)
+        if self.check_exist(file):
+            self.errors.append(f'Do not shred: {file}')
             return False
         else:
             self.count_del_files += 1
             return True
 
-    def del_file(self, path: str) -> bool:
-        """Deletes the file at the specified path using normal deletion"""
+    def del_file(self, file: str) -> bool:
+        """Deletes the file at the specified path using normal deletion
+
+        :param file: <str> Path to the file
+        :return: <bool> The logical status of the operation of deletes the file
+        """
         try:
-            if os.path.islink(path):
-                os.unlink(path)
+            if os.path.islink(file):
+                os.unlink(file)
             else:
-                self.zero_file(path)
-                os.remove(path)
+                self.zero_file(file)
+                os.remove(file)
         except OSError:
-            self.errors.append(f'Os error! Do not delete: {path}')
+            self.errors.append(f'Os error! Do not delete: {file}')
             return False
-        if self.check_exist(path):
-            self.errors.append(f'Do not delete: {path}')
+        if self.check_exist(file):
+            self.errors.append(f'Do not delete: {file}')
             return False
         else:
             self.count_del_files += 1
             return True
 
     def del_dir(self, path: str) -> bool:
-        """Deletes an empty folder at the specified path"""
+        """Deletes an empty folder at the specified path
+
+        :param path: <str> Path to the directory
+        :return: The logical status of the operation of deletes the folder
+        """
         try:
             if os.path.islink(path):
                 os.unlink(path)
@@ -118,4 +144,5 @@ class Cleaner:
         self.count_del_dirs = 0
 
     def reset_error_list(self):
+        """Resetting error list"""
         self.errors.clear()
