@@ -13,14 +13,13 @@ PACKAGE = "mycleaner"
 VERSION = __import__(PACKAGE).__version__
 AUTHOR = __import__(PACKAGE).__author__
 AUTHOR_EMAIL = "myhackband@yandex.ru"
-DESCRIPTION = "A package of modules and console utilities for destruction, zeroing, deleting files." \
-              " Aleksandr Suvorov | https://github.com/mysmarthub/mycleaner | " \
-              "Donate: 4048 4150 0400 5852 | 4276 4417 5763 7686"
+DESCRIPTION = "A package of modules and CLI utility for destroying, zeroing, and deleting files." \
+              f" {AUTHOR} "
 NAME = "mycleaner"
 URL = "https://github.com/mysmarthub/mycleaner"
 LICENSE = 'BSD 3-Clause License'
 LONG_DESCRIPTION = open(join(dirname(__file__), 'README.md')).read()
-INSTALL_REQUIRES = []
+INSTALL_REQUIRES = ['click']
 PLATFORM = ['Linux, Windows']
 CLASSIFIERS = [
     "Development Status :: 5 - Production/Stable",

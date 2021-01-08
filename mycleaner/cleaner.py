@@ -2,14 +2,15 @@
 # -----------------------------------------------------------------------------
 # Licensed under the terms of the BSD 3-Clause License
 # (see LICENSE for details)
+# https://github.com/mysmarthub
 # Copyright © 2020-2021 Aleksandr Suvorov
 # -----------------------------------------------------------------------------
-"""Module for destruction, zeroing, and deleting files.
+"""
+Module for destruction, zeroing, and deleting files.
 
 Used to create applications for destruction, zeroing, and deleting files.
 Delete a folder. After being reset or destroyed, file recovery is impossible or
 extremely difficult.
-
 To destroy it, use the utility shred.
 """
 import os
@@ -22,13 +23,12 @@ class Cleaner:
 
     for further destruction, zeroing, deleting files. Delete a folder.
     """
-    def __init__(self, root=False, shreds=30):
+    def __init__(self, shreds=30):
         """Accepts an optional parameter when creating an object shred:
 
         the number of passes to overwrite the file. By default, 30 passes.
         """
         self.errors = []
-        self.root = root
         self.shreds = shreds
         self.count_zero_files = 0
         self.count_del_files = 0
@@ -46,9 +46,6 @@ class Cleaner:
 
     @staticmethod
     def check_exist(path):
-        """
-
-        """
         if os.path.exists(path):
             return True
         return False
@@ -77,21 +74,15 @@ class Cleaner:
         """
         rep_path = self.replace_path(file)
         if os.name == 'posix':
-            if self.root:
-                status = os.system(f'sudo shred -zvuf -n {self.shreds} {rep_path}')
-            else:
-                status = os.system(f'shred -zvu -n {self.shreds} {rep_path}')
+            status = os.system(f'shred -zvuf -n {self.shreds} {rep_path}')
             if status:
                 self.errors.append(f'Do not shred, os error: {file}')
                 return False
+            else:
+                self.count_del_files += 1
+                return True
         else:
             self.del_file(file)
-        if self.check_exist(file):
-            self.errors.append(f'Do not shred: {file}')
-            return False
-        else:
-            self.count_del_files += 1
-            return True
 
     def del_file(self, file: str) -> bool:
         """Deletes the file at the specified path using normal deletion

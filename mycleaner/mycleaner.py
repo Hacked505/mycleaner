@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------------
 # Licensed under the terms of the BSD 3-Clause License
@@ -6,214 +5,138 @@
 # https://github.com/mysmarthub
 # Copyright © 2020-2021 Aleksandr Suvorov
 # -----------------------------------------------------------------------------
-"""My Cleaner console utility for destroying (shred), zeroing, and deleting files."""
-import argparse
-import datetime
-import shutil
+"""CLI utility for destroying, zeroing, and deleting files"""
+import os
 
-from pathlib import Path
+import click
 
 try:
-    from mycleaner import smart, cleaner
+    import smart
+    import cleaner
 except (ImportError, ModuleNotFoundError):
-    import smart, cleaner
-
-COLUMNS, _ = shutil.get_terminal_size()
-VERSION = '1.2.0'
+    from mycleaner import smart, cleaner
 
 
-def smart_print(text='', char='-'):
-    columns, _ = shutil.get_terminal_size()
-    print(f'{text}'.center(columns, char))
+__version__ = '1.3.0'
+__author__ = 'Aleksandr Suvorov'
+__url__ = 'https://githib.com/mysmarthub/mycleaner'
+__donate__ = 'Donate: 4048 4150 0400 5852 | 4276 4417 5763 7686'
+__copyright__ = 'Copyright © 2020-2021 Aleksandr Suvorov'
 
 
-def check_path(path):
-    return True if Path(path).exists() else False
-
-
-def make_error_log(error_list):
-    name = 'my_cleaner_err_log.txt'
-    with open(name, 'w') as file:
-        print(f'Errors {datetime.datetime.now()}'.center(COLUMNS, '='), file=file)
-        for err in error_list:
-            print(err, file=file)
-    print(f'Save {name}')
-
-
-def status_print(status):
+def print_status(status):
     if status:
-        print('Done!')
+        print('[Successfully!]')
     else:
-        print('Error!')
-    smart_print()
+        print('[Error!]')
 
 
-def work(obj_dict, method=1, log=False, shreds=30):
-    my_cleaner = cleaner.Cleaner()
-    my_cleaner.shreds = shreds
-    for obj in obj_dict.values():
-        smart_print(f'Working with: {obj.path}', '=')
-        count = 0
-        for file in obj.get_files():
-            count += 1
-            status = None
-            if method == 1:
-                print(f'{count} Destroying the file: {file}')
-                status = my_cleaner.shred_file(file)
-            elif method == 2:
-                print(f'{count} Resetting the file: {file}')
-                status = my_cleaner.zero_file(file)
-            elif method == 3:
-                print(f'{count} Delete files: {file}')
-                status = my_cleaner.del_file(file)
-            status_print(status)
-    smart_print('The work has been completed', '=')
-    print(f'Files were processed: {my_cleaner.count_del_files + my_cleaner.count_zero_files}')
-    print(f'Errors: {len(my_cleaner.errors)}')
-    smart_print(' Error list: ', '=')
-    for err in my_cleaner.errors:
-        print(err)
-    if log and my_cleaner.errors:
-        make_error_log(my_cleaner.errors)
-    my_cleaner.reset_error_list()
-    my_cleaner.reset_count()
+def logo_start():
+    smart.smart_print('', '*')
+    smart.smart_print(f' My Cleaner ', '=')
+    smart.smart_print('', '*')
+    smart.smart_print(' CLI utility for destroying, zeroing, and deleting files ', ' ')
 
 
-def make_path_obj(path_list):
-    if path_list:
-        return {n: smart.PathObj(path) for n, path in enumerate(path_list, 1)}
-    return False
+def logo_finish():
+    smart.smart_print('', '=')
+    smart.smart_print('The program is complete', '-')
+    smart.smart_print(f' {__author__} | {__url__} ', ' ')
+    smart.smart_print(f'{__donate__}', ' ')
 
 
-def make_path_list(path_list):
-    path_list = set(path_list)
-    return [path for path in path_list if Path(path).exists()]
+def print_paths(paths):
+    print('Added paths...')
+    print('Counting files and folders...')
+    count = 0
+    for path in paths:
+        count += 1
+        smart.smart_print()
+        print(f'[{count}]: {path} | Folders[{smart.get_count_dirs(path)}] | Files[{smart.get_count_files(path)}]')
+    smart.smart_print()
 
 
-def createParser():
-    parser = argparse.ArgumentParser(
-        description='console utility for destroying (shred), zeroing, and deleting files',
-        prog='My Cleaner',
-        epilog="""https://github.com/mysmarthub/mycleaner""",
-    )
-    parser.add_argument('--p', '--paths', nargs='+', help='Paths to files and folders')
-    parser.add_argument('--o', '--overwrites', type=int, help='Number of overwrites', default=0)
-    parser.add_argument('--s', help='Shredding and delete file', action='store_const', const=True, default=False)
-    parser.add_argument('--z', help='Zeroing no delete file', action='store_const', const=True, default=False)
-    parser.add_argument('--d', help='Zeroing and delete file', action='store_const', const=True, default=False)
-    parser.add_argument('--log', help='Save errors log', action='store_const', const=True, default=False)
-    parser.add_argument('--version', action='version', help='Program version', version='%(prog)s v{}'.format(VERSION))
-    return parser
-
-
-def get_paths():
-    path_list = []
-    while True:
-        smart_print()
-        user_path = input('Enter the path to the file or folder or "q" + Enter to continue: ')
-        if user_path in ['q', 'й']:
-            if path_list:
-                break
-            else:
-                print('\nError! You didn\'t add any paths.')
-                continue
-        elif check_path(user_path):
-            path_list.append(user_path)
-            print('Path added successfully')
-            continue
+def start(paths, num=30, method='destroy', dirs=False):
+    obj_data = smart.DataObj()
+    my_cleaner = cleaner.Cleaner(shreds=num)
+    for path in paths:
+        obj_data.add_path(path)
+    for file in obj_data.get_files():
+        smart.smart_print()
+        print(f'[{method}] File: {file}')
+        if method == 'destroy':
+            status = my_cleaner.shred_file(file)
+        elif method == 'zeroing':
+            status = my_cleaner.zero_file(file)
         else:
-            print('Error! The wrong way!')
-            continue
-    return path_list
+            status = my_cleaner.del_file(file)
+        print_status(status)
+    smart.smart_print()
+    if dirs:
+        for path in obj_data.get_dirs():
+            print(f'Delete folder: {path}')
+            status = my_cleaner.del_dir(path)
+            print_status(status)
+    if my_cleaner.errors:
+        smart.smart_print(f' Errors: [{len(my_cleaner.errors)}]')
+        for err in my_cleaner.errors:
+            print(err)
 
 
-def get_method():
-    while True:
-        smart_print()
-        print('Select the desired action (Ctrl+C to exit):\n'
-              '1. Destruction (shred) and delete\n'
-              '2. Zeroing not delete\n'
-              '3. Zeroing and delete')
-        smart_print()
-        try:
-            user_input = int(input('Input: '))
-            if user_input not in [1, 2, 3]:
-                raise ValueError
-        except ValueError:
-            smart_print()
-            print('Input error!')
-            continue
+def abort_if_false(ctx, param, value):
+    if not value:
+        ctx.abort()
+
+
+def print_version(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
+    click.echo(f'My Cleaner {__version__} | {__copyright__}')
+    ctx.exit()
+
+
+@click.command()
+@click.option('--paths', '--p',
+              multiple=True,
+              help='Paths to a files or folder with files, all attached '
+                   'files and folders will be taken into account! '
+                   'Be extremely careful and attentive when adding.')
+@click.option('--num', '--n',
+              default=30,
+              help='Number of overwrites. If you use the shred method, '
+                   'each file will be overwritten the specified number of '
+                   'times before being destroyed.')
+@click.option('--dirs', '--d',
+              is_flag=True,
+              help='Delete the folders?')
+@click.option('--yes', '--y',
+              is_flag=True,
+              help='Auto Mode, be very careful with this parameter, if you specify it, '
+                   'the program will start and start destroying files automatically.')
+@click.option('--shred', 'method',
+              flag_value='destroy',
+              default=True,
+              help='Overwrites random data, renames and deletes the file, used by default.')
+@click.option('--zero', 'method', flag_value='zeroing', help='Resets and does not delete the file.')
+@click.option('--del', 'method', flag_value='delete', help='Resets and deletes the file.')
+@click.option('--version', '--v', is_flag=True, callback=print_version,
+              help='Displays the version of the program and exits.',
+              expose_value=False, is_eager=True)
+def main(paths, num, dirs, method, yes):
+    """My Cleaner - CLI utility for destroying, zeroing, and deleting files."""
+    logo_start()
+    paths = [path for path in set(paths) if os.path.exists(path)]
+    if paths:
+        smart.smart_print()
+        print_paths(paths)
+        if yes or click.confirm('Do you want to continue?', default=True):
+            start(paths=paths, num=num, method=method, dirs=dirs)
         else:
-            return user_input
-
-
-def get_shreds():
-    while True:
-        try:
-            shreds = int(input('Enter the number of file overwrites: '))
-        except ValueError:
-            smart_print()
-            print('Input error!')
-        else:
-            return shreds
-
-
-def get_args(func):
-    parser = createParser()
-    namespace = parser.parse_args()
-
-    def deco():
-        smart_print(f' My Cleaner {VERSION} ', '=')
-        smart_print(' Aleksandr Suvorov | https://githib.com/mysmarthub/mycleaner ', '-')
-        smart_print('Donate: 4048 4150 0400 5852 | 4276 4417 5763 7686', ' ')
-        smart_print(' Utility for mashing, zeroing, deleting files ', '=')
-        print('To exit, press Ctrl+C')
-        smart_print('', '=')
-        func(namespace)
-        smart_print('', '=')
-        smart_print('The program is complete', '-')
-        smart_print('Donate: 4048 4150 0400 5852 | 4276 4417 5763 7686', ' ')
-
-    return deco
-
-
-@get_args
-def main(namespace):
-    try:
-        if not namespace.p:
-            print('To work, specify the path/paths to the file/files folder/folders...')
-            namespace.p = get_paths()
-        path_list = make_path_list(namespace.p)
-        if path_list:
-            print(f'Paths added: {len(path_list)}')
-            smart_print()
-            obj_dict = make_path_obj(path_list)
-            print(f'Counting files (Sometimes it can take a long time) ...')
-            for val in obj_dict.values():
-                print(f'path: {val.path} | files[{val.num_of_files}] | folders[{val.num_of_dirs}]')
-            if not namespace.s and not namespace.z and not namespace.d:
-                method = get_method()
-                if method == 1:
-                    namespace.s = True
-                elif method == 2:
-                    namespace.z = True
-                else:
-                    namespace.d = True
-            if namespace.s:
-                if not namespace.o:
-                    namespace.o = get_shreds()
-                method = 1
-            elif namespace.z:
-                method = 2
-            else:
-                method = 3
-            work(obj_dict=obj_dict, method=method, log=namespace.log, shreds=namespace.o)
-        else:
-            print('Error! You haven\'t added a path...')
-    except KeyboardInterrupt:
-        print()
-        print('Exit...')
-        pass
+            print('Exit...')
+    else:
+        smart.smart_print()
+        print('No paths found...')
+    logo_finish()
 
 
 if __name__ == '__main__':

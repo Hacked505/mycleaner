@@ -6,6 +6,42 @@
 # Copyright © 2020-2021 Aleksandr Suvorov
 # -----------------------------------------------------------------------------
 import os
+import shutil
+
+
+def smart_print(text='', char='-'):
+    columns, _ = shutil.get_terminal_size()
+    print(f'{text}'.center(columns, char))
+
+
+def get_count_files(path: str) -> int:
+    """
+    Counting the number of files recursively nested in a directory
+
+    :param path: <str> Path to the directory
+    :return: <int> Counting the number of files recursively nested in a directory
+    """
+    if os.path.isfile(path):
+        return 1
+    elif os.path.isdir(path):
+        return sum([len(files) for _, _, files in os.walk(path)])
+    else:
+        return 0
+
+
+def get_count_dirs(path: str) -> int:
+    """
+    Counting the number of folder recursively nested in a directory
+
+    :param path: <str> Path to the directory
+    :return: <int> Counting the number of folders recursively nested in a directory
+    """
+    if os.path.isfile(path):
+        return 1
+    elif os.path.isdir(path):
+        return sum([len(folders) for _, folders, _ in os.walk(path)])
+    else:
+        return 0
 
 
 class PathObj:
