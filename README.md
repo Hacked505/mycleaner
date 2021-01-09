@@ -55,8 +55,8 @@ Termux support:
 
     1. Download and install Termux https://play.google.com/store/apps/details?id=com.termux&hl=ru&gl=US
     2. pkg install python
-    3. pip install sfd
-    4. sfd --help
+    3. pip install mycleaner
+    4. mycleaner --help
     
     Read more about how to use the utility.
 ---
