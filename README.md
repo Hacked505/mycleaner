@@ -47,6 +47,19 @@ What's new?
 > and work has been accelerated.
 
 ---
+Termux support:
+---
+
+> You can easily use the utility with Termux 
+> on mobile phones and tablets.
+
+    1. Download and install Termux https://play.google.com/store/apps/details?id=com.termux&hl=ru&gl=US
+    2. pkg install python
+    3. pip install sfd
+    4. sfd --help
+    
+    Read more about how to use the utility.
+---
 Description:
 ---
 >A package of modules and console utilities for destroying, 
