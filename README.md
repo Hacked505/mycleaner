@@ -122,36 +122,45 @@ Options:
 
 
 ```
+---
+Use:
+---
 
 >Package installation:
 
 `pip install mycleaner`
 
+`mycleaner --paths /path/ --paths /path2/ --num 100 --dirs --yes --shred`
+
 >Git Clone:
 
-`git clone https://github.com/mysmarthub/mycleaner`
+`git clone https://github.com/mysmarthub/mycleaner.git`
+
+`cd mycleaner`
+
+`pip install -r requirements.txt`
+
+`python mycleaner/mycleaner.py --paths /path/ --p /path2/ --n 100 --d --yes --shred`
+
 
 ---
 
->Use:
-
-`mycleaner --paths /path/ --paths /path2/ --num 100 --dirs --yes --shred`
-
 >To delete some files, you may need administrator rights. 
-> To do this, install the package with the command:
-> 
->`sudo pip install mycleaner`
-> 
->`sudo mycleaner --paths /path/ --paths /path2/ --num 100 --dirs --yes --shred`
+To do this, install the package with the command:
 
->To run the utility, use:
+`sudo pip install mycleaner`
 
-```
-git clone https://github.com/mysmarthub/mycleaner.git
-cd mycleaner
-pip install -r requirements
-python mycleaner/mycleaner.py --p /path/ /path2/file.file --o 100 --s --log
-```
+`sudo mycleaner --paths /path/ --paths /path2/ --num 100 --dirs --yes --shred`
+
+>or:
+
+`git clone https://github.com/mysmarthub/mycleaner.git`
+
+`cd mycleaner`
+
+`sudo pip install -r requirements.txt`
+
+`sudo python mycleaner/mycleaner.py --paths /path/ --p /path2/ --n 100 --d --yes --shred`
 
 ---
 Links:
