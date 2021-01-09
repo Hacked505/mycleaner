@@ -36,9 +36,7 @@ def get_count_dirs(path: str) -> int:
     :param path: <str> Path to the directory
     :return: <int> Counting the number of folders recursively nested in a directory
     """
-    if os.path.isfile(path):
-        return 1
-    elif os.path.isdir(path):
+    if os.path.isdir(path):
         return sum([len(folders) for _, folders, _ in os.walk(path)])
     else:
         return 0
