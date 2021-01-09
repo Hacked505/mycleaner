@@ -57,7 +57,11 @@ Termux support:
     2. pkg install python
     3. pip install mycleaner
     4. mycleaner --help
+    5. To access the file storage: 
+        termux-setup-storage
+        cd ~/storage
     
+    Files are destroyed even without root access and sudo.
     Read more about how to use the utility.
 ---
 Description:
